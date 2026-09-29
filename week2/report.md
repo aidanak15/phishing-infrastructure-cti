@@ -175,7 +175,7 @@ The registrant information was redacted by the RDAP service.
 
 ### Evidence
 
-![icann result](icann-result.png)
+![icann result](images/icann-result.png)
 
 ### Interpretation
 
