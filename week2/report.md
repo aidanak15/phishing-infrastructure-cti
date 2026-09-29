@@ -97,6 +97,29 @@ The very recent domain creation date also provides additional suspicious context
 
 ---
 
+## 5. Infrastructure Relations
+
+VirusTotal passive DNS data showed that the phishing subdomain `google.documentspartage.com` resolved to the following IP address:
+
+**Resolved IP:** `45.74.61.11`  
+**Date resolved:** September 25, 2026  
+**VirusTotal detections for the IP:** 5/91
+
+VirusTotal also identified a sibling subdomain:
+
+**Sibling:** `microsoft.documentspartage.com`  
+**Resolved IP:** `141.11.185.74`  
+**Detections:** 0/91
+
+This is an important infrastructure finding because the same parent domain contains multiple brand-themed subdomains, including `google` and `microsoft`. This may indicate that the infrastructure is being reused for impersonation or phishing-related activity.
+
+VirusTotal also recorded a historical SSL certificate associated with `google.documentspartage.com`.
+
+### Evidence
+
+![VirusTotal relations](images/virustotal-relations.png)
+
+---
 ## 5. IP Reputation Investigation
 
 The related IP address was checked using AbuseIPDB.
