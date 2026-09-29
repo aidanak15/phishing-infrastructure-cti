@@ -54,17 +54,17 @@ A verified and currently online phishing URL was selected from PhishTank for fur
 **Source:** PhishTank  
 **Phish ID:** 9534755  
 **URL:** `https://google.documentspartage.com/`  
-**Domain:** `documentspartage.com`  
+**Registered domain:** `documentspartage.com`  
 **Subdomain:** `google`  
-**Submitted:** September 29, 2026  
-**Verification status:** Valid Phish  
+**Submitted:** September 29, 2026, 6:33 PM  
+**Verification status:** Verified — Is a phish  
 **Online status:** Online  
 
-The sample was selected because it uses the `google` subdomain, which may create the impression of a legitimate Google-related resource even though the actual registered domain is `documentspartage.com`.
+The sample was selected because it uses `google` as a subdomain, which may make the URL appear related to Google at first glance. However, the actual registered domain is `documentspartage.com`.
 
 ### Evidence
 
-![PhishTank sample](images/sample-source-ph.png)
+![PhishTank verified sample](images/sample-source-ph.png)
 
 ---
 
