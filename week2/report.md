@@ -187,31 +187,25 @@ However, domain age alone is not sufficient to classify a domain as malicious. I
 
 ---
 
-## 7. Certificate Transparency Investigation
+## 8. Certificate Transparency Investigation
 
-Certificate Transparency data was checked using crt.sh.
+The registered domain `documentspartage.com` was checked using crt.sh to identify publicly logged TLS certificates and related subdomains.
 
-**Domain:**  
-`[INSERT DOMAIN]`
+**Domain checked:** `documentspartage.com`
 
-**Certificates found:**  
-`[INSERT NUMBER]`
+**Result:** No certificates were found in crt.sh at the time of analysis.
 
-**Related subdomains:**  
-`[INSERT RELATED SUBDOMAINS]`
-
-**Issuer:**  
-`[INSERT ISSUER]`
-
-### Screenshot
+### Evidence
 
 ![crt.sh result](images/crtsh-result.png)
 
 ### Interpretation
 
-Certificate Transparency data can help identify additional infrastructure associated with the same domain.
+No Certificate Transparency records were returned for `documentspartage.com`.
 
-In this case, `[INSERT FINDING]`.
+This may indicate that certificate information for the domain had not yet appeared in the crt.sh dataset at the time of analysis, or that no matching certificate record was available through this source.
+
+This result is especially relevant because VirusTotal had already shown a historical SSL certificate associated with `google.documentspartage.com`, demonstrating that different OSINT sources may have different levels of visibility and update timing.
 
 ---
 
