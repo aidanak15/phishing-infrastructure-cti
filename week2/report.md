@@ -155,34 +155,31 @@ The comparison demonstrates that reputation scores depend heavily on the source,
 
 ---
 
-## 6. Domain Registration Investigation
+## 7. Domain Registration Investigation
 
-The domain was checked using ICANN Lookup or WHOIS.
+The registered domain `documentspartage.com` was checked using the ICANN Registration Data Lookup Tool.
 
-**Domain:**  
-`[INSERT DOMAIN]`
+**Domain:** `documentspartage.com`  
+**Registrar:** Hosting Concepts B.V. d/b/a Registrar.eu  
+**Created:** September 25, 2026  
+**Updated:** September 25, 2026  
+**Expiration:** September 25, 2027  
 
-**Registrar:**  
-`[INSERT REGISTRAR]`
+**Nameservers:**
 
-**Creation date:**  
-`[INSERT DATE]`
+- NS1.OPENPROVIDER.NL
+- NS2.OPENPROVIDER.BE
+- NS3.OPENPROVIDER.EU
 
-**Expiration date:**  
-`[INSERT DATE]`
-
-**Domain age:**  
-`[INSERT AGE]`
-
-### Screenshot
-
-![ICANN result](images/icann-result.png)
+The registrant information was redacted by the RDAP service.
 
 ### Interpretation
 
-The registration information suggests that `[INSERT INTERPRETATION]`.
+The domain was created only a few days before the phishing sample was submitted to PhishTank.
 
-A recently registered domain can be suspicious, but domain age alone is not sufficient to classify an indicator as malicious.
+This recent registration date provides additional suspicious context when combined with the verified phishing status from PhishTank.
+
+However, domain age alone is not sufficient to classify a domain as malicious. In this investigation, it is used together with reputation, passive DNS, and other OSINT evidence.
 
 ---
 
