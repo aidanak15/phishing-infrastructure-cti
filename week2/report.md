@@ -70,30 +70,30 @@ The sample was selected because it uses `google` as a subdomain, which may make 
 
 ## 4. VirusTotal Investigation
 
-The selected URL or domain was checked using VirusTotal to determine whether security vendors had already identified it as malicious.
+The selected phishing subdomain was checked using VirusTotal.
 
-**Indicator checked:**  
-`[INSERT DOMAIN OR URL]`
+**Indicator checked:** `google.documentspartage.com`
 
-**Detection result:**  
-`[INSERT RESULT, e.g. 5/91 vendors flagged the domain]`
+**Detection result:** 0/91 security vendors flagged the domain as malicious.
 
 **Additional information:**
 
-- Registrar: `[INSERT]`
-- Domain creation date: `[INSERT]`
-- Categories/tags: `[INSERT]`
-- Related IP address: `[INSERT]`
+- Registrar: Hosting Concepts B.V. d/b/a Registrar.eu
+- Creation date: 4 days before the analysis
+- Last analysis date: 4 days before the analysis
+- Fortinet classification: Spam
 
-### Screenshot
+### Evidence
 
-![VirusTotal result](images/virustotal-result.png)
+![VirusTotal result](images/virustotal-subdomain.png)
 
 ### Interpretation
 
-VirusTotal showed that `[INSERT INTERPRETATION]`.
+VirusTotal did not classify the domain as malicious at the time of analysis, even though PhishTank had already verified the URL as a valid phishing site.
 
-This result demonstrates that reputation platforms can provide useful context, but their verdict should not be treated as the only source of truth.
+This demonstrates an important limitation of relying on a single threat-intelligence source. A newly created phishing domain may not yet be detected by most reputation engines.
+
+The very recent domain creation date also provides additional suspicious context, although domain age alone is not sufficient to classify a site as malicious.
 
 ---
 
