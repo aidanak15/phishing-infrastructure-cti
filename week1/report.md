@@ -56,6 +56,24 @@ The CTI concepts studied during Week 1 provide the theoretical foundation for an
 
 In the following weeks, these concepts will be used to collect phishing indicators from open sources, process the data, and identify relationships between malicious URLs, domains, and IP addresses.
 
+## 6. Week 1 Result
+
+During Week 1, the project established:
+
+- a glossary of key CTI terms;
+- a classification of phishing-related threats;
+- a list of relevant threat intelligence sources;
+- the initial scope for phishing infrastructure analysis.
+
+These results provide the foundation for the data collection process in Week 2.
+
+## Deliverables Checklist
+
+- [x] Created a glossary of key CTI terms
+- [x] Classified phishing-related threats
+- [x] Identified relevant threat intelligence sources
+- [x] Connected CTI fundamentals to the selected project topic
+
 ## References
 
 - ENISA Threat Landscape
