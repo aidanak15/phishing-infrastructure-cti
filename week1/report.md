@@ -76,7 +76,13 @@ These results provide the foundation for the data collection process in Week 2.
 
 ## References
 
-- ENISA Threat Landscape
-- Verizon Data Breach Investigations Report
-- Unit 42 Threat Research
-- MISP Project Documentation
+1. ENISA — Threat Landscape 2026  
+   https://www.enisa.europa.eu/publications/enisa-threat-landscape-2026
+2. Verizon — 2026 Data Breach Investigations Report (DBIR)  
+   https://www.verizon.com/business/resources/reports/dbir/
+3. Palo Alto Networks Unit 42 — Threat Research  
+   https://unit42.paloaltonetworks.com/
+4. Palo Alto Networks Unit 42 — 2025 Global Incident Response Report: Social Engineering Edition  
+   https://unit42.paloaltonetworks.com/2025-unit-42-global-incident-response-report-social-engineering-edition/
+5. MISP Project — Documentation  
+   https://www.misp-project.org/documentation/
