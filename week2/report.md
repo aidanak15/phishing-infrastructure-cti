@@ -47,33 +47,24 @@ The following sources were selected for phishing infrastructure analysis.
 
 ---
 
-## 3. Sample Selection Strategy
+## 3. Sample Selection
 
-A real phishing or malicious indicator should be selected from a public threat-intelligence source such as URLhaus or PhishTank.
+A verified and currently online phishing URL was selected from PhishTank for further investigation.
 
-The malicious page itself should not be opened directly.
+**Source:** PhishTank  
+**Phish ID:** 9534755  
+**URL:** `https://google.documentspartage.com/`  
+**Domain:** `documentspartage.com`  
+**Subdomain:** `google`  
+**Submitted:** September 29, 2026  
+**Verification status:** Valid Phish  
+**Online status:** Online  
 
-Instead, the indicator should be investigated through safe lookup interfaces.
-
-### Selected Sample
-
-**Source:** [INSERT SOURCE: URLhaus / PhishTank]
-
-**URL:**  
-`[INSERT URL]`
-
-**Domain:**  
-`[INSERT DOMAIN]`
-
-**Date observed:**  
-`[INSERT DATE]`
-
-**Source status:**  
-`[INSERT SOURCE VERDICT]`
+The sample was selected because it uses the `google` subdomain, which may create the impression of a legitimate Google-related resource even though the actual registered domain is `documentspartage.com`.
 
 ### Evidence
 
-![Sample source screenshot](images/sample-source.png)
+![PhishTank sample](images/sample-source-ph.png)
 
 ---
 
