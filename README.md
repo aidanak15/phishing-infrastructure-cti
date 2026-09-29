@@ -1,22 +1,32 @@
 # Cyber Threat Intelligence Analysis of Phishing Infrastructure
 
-## Project overview
-This project analyzes publicly reported phishing infrastructure using cyber threat intelligence and OSINT methods.
+## Project Overview
+
+This project analyzes publicly reported phishing infrastructure using Cyber Threat Intelligence (CTI) and OSINT methods.
+
+The project focuses on collecting, processing, and analyzing phishing-related indicators such as malicious URLs, domains, and IP addresses.
 
 ## Objectives
+
 - Identify and classify phishing-related indicators.
-- Collect information from open sources.
+- Collect threat intelligence from open sources.
 - Verify and organize URLs, domains, and IP addresses.
-- Import selected indicators into MISP.
+- Process and normalize collected threat data.
+- Explore the use of MISP for threat intelligence management.
 
-## Week 1 — CTI fundamentals
-Work in progress.
+## Weekly Progress
 
-## Week 2 — OSINT data collection
-Work in progress.
+### Week 1 — Cyber Threat Intelligence Fundamentals
+Introduction to CTI concepts, phishing threats, indicators of compromise, and threat intelligence sources.
 
-## Week 3 — Data processing and MISP
-Work in progress.
+[View Week 1 Report](week1/report.md)
 
-## Sources
-Sources will be listed here.
+### Week 2 — Data Collection Process
+Collection and mapping of OSINT sources used for phishing infrastructure analysis.
+
+[View Week 2 Report](week2/report.md)
+
+### Week 3 — Data Processing and Exploitation
+Processing, normalization, enrichment, and organization of collected phishing indicators.
+
+[View Week 3 Report](week3/report.md)
