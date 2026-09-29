@@ -120,34 +120,38 @@ VirusTotal also recorded a historical SSL certificate associated with `google.do
 ![VirusTotal relations](images/virustotal-relations.png)
 
 ---
-## 5. IP Reputation Investigation
+## 6. IP Reputation Investigation
 
-The related IP address was checked using AbuseIPDB.
+The IP address associated with `google.documentspartage.com` was checked using AbuseIPDB.
 
-**IP address:**  
-`[INSERT IP]`
+**IP address:** `45.74.61.11`
 
-**Abuse Confidence Score:**  
-`[INSERT SCORE]`
+**Abuse Confidence Score:** 0% — Low Risk  
+**Total reports:** 8  
+**Distinct reporters:** 7  
+**Most recent report:** approximately 3 years ago  
+**ISP:** MICFO-CA  
+**Usage type:** Data Center/Web Hosting/Transit  
+**ASN:** AS205397  
+**Domain name:** virtualine.org  
+**Country:** Germany  
+**City:** Frankfurt am Main, Hesse
 
-**Total reports:**  
-`[INSERT NUMBER]`
+Historical reports included categories such as DDoS attacks, bad web bots, brute-force activity, email spam, hacking, and web application attacks.
 
-**ISP / Hosting provider:**  
-`[INSERT PROVIDER]`
-
-**Country:**  
-`[INSERT COUNTRY]`
-
-### Screenshot
+### Evidence
 
 ![AbuseIPDB result](images/abuseipdb-result.png)
 
 ### Interpretation
 
-The AbuseIPDB result showed that `[INSERT INTERPRETATION]`.
+AbuseIPDB currently assigns the IP address an Abuse Confidence Score of 0%, indicating low current risk according to its scoring model.
 
-This provides infrastructure-level context that is not available from URL-only analysis.
+However, the IP has been reported eight times historically, and the previous reports include several types of malicious or suspicious activity.
+
+This result differs from VirusTotal, where the same IP had 5/91 detections. It also differs from PhishTank, which had already verified the associated URL as phishing.
+
+The comparison demonstrates that reputation scores depend heavily on the source, update time, and type of data being analyzed. A low current AbuseIPDB score does not necessarily mean that the infrastructure is safe.
 
 ---
 
