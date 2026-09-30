@@ -63,16 +63,15 @@ The raw data was stored in:
 
 `week3/raw_iocs.csv`
 
-```csv
-value,type,source,confidence,status,tags,notes
-https://google.documentspartage.com/,url,PhishTank,high,malicious,phishing,Verified phishing URL
-google.documentspartage.com,domain,VirusTotal,medium,suspicious,phishing,Associated with verified phishing URL
-documentspartage.com,domain,ICANN Lookup,medium,suspicious,new-domain,Registered on 2026-09-25
-45.74.61.11,ip,VirusTotal,medium,suspicious,hosting,5/91 detections
-45.74.61.11,ip,AbuseIPDB,low,contextual,historical-abuse,0 percent current abuse confidence with 8 historical reports
-microsoft.documentspartage.com,domain,VirusTotal Relations,medium,suspicious,brand-themed,Sibling domain
-141.11.185.74,ip,VirusTotal Relations,low,unknown,related-ip,Related infrastructure
-```
+| Value | Type | Source | Confidence | Status | Tags | Notes |
+|---|---|---|---|---|---|---|
+| `https://google.documentspartage.com/` | URL | PhishTank | High | Malicious | Phishing | Verified phishing URL |
+| `google.documentspartage.com` | Domain | VirusTotal | Medium | Suspicious | Phishing | Associated with verified phishing URL |
+| `documentspartage.com` | Domain | ICANN Lookup | Medium | Suspicious | New domain | Registered on 2026-09-25 |
+| `45.74.61.11` | IP | VirusTotal | Medium | Suspicious | Hosting | 5/91 detections |
+| `45.74.61.11` | IP | AbuseIPDB | Low | Contextual | Historical abuse | 0% current abuse confidence with 8 historical reports |
+| `microsoft.documentspartage.com` | Domain | VirusTotal Relations | Medium | Suspicious | Brand-themed | Sibling domain |
+| `141.11.185.74` | IP | VirusTotal Relations | Low | Unknown | Related IP | Related infrastructure |
 
 ---
 
