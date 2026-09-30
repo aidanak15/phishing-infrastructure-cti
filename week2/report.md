@@ -91,7 +91,7 @@ The selected phishing subdomain was checked using VirusTotal.
 
 VirusTotal did not classify the domain as malicious at the time of analysis, even though PhishTank had already verified the URL as a valid phishing site.
 
-This demonstrates an important limitation of relying on a single threat-intelligence source. A newly created phishing domain may not yet be detected by most reputation engines.
+This demonstrates an important limitation of relying on a single threat-intelligence source. A phishing site hosted under a recently registered parent domain may not yet be detected by most reputation engines.
 
 The very recent domain creation date also provides additional suspicious context, although domain age alone is not sufficient to classify a site as malicious.
 
@@ -209,7 +209,22 @@ This result is especially relevant because VirusTotal had already shown a histor
 
 ---
 
-## 9. Cross-Source Comparison
+## 9. Data Source Mapping
+
+| Investigation Task | Primary Source | Secondary Source | Data Collected |
+|---|---|---|---|
+| Identify verified phishing URL | PhishTank | URLhaus | URL, status, submission date |
+| Check domain reputation | VirusTotal | PhishTank | Vendor detections, classification |
+| Identify related infrastructure | VirusTotal Relations | — | IP addresses, sibling domains, passive DNS |
+| Check IP reputation | AbuseIPDB | VirusTotal | Abuse score, reports, ASN, hosting information |
+| Check domain registration | ICANN Lookup | — | Creation date, registrar, nameservers |
+| Check certificate data | crt.sh | VirusTotal | Certificate Transparency records |
+
+This mapping defines which sources are used at each stage of the phishing infrastructure investigation.
+
+---
+
+## 10. Cross-Source Comparison
 
 The same phishing infrastructure was analyzed across several independent OSINT and threat-intelligence sources.
 
@@ -237,7 +252,7 @@ This demonstrates that phishing infrastructure cannot be evaluated reliably usin
 
 ---
 
-## 10. Research Findings
+## 11. Research Findings
 
 ### RQ1 — Which open-source threat intelligence sources provide the most useful information for phishing infrastructure analysis?
 
@@ -280,7 +295,7 @@ Together, these indicators provide significantly more context than any single re
 
 ---
 
-## 11. Main Finding
+## 12. Main Finding
 
 The Week 2 investigation showed that a phishing site can remain undetected by many automated reputation engines even after it has already been identified by another threat-intelligence community.
 
@@ -292,7 +307,7 @@ This finding directly supports the project methodology: phishing infrastructure 
 
 ---
 
-## 12. Limitations
+## 13. Limitations
 
 The investigation has several limitations:
 
@@ -307,7 +322,7 @@ The investigation has several limitations:
 
 ---
 
-## 13. Connection to the Final Project
+## 14. Connection to the Final Project
 
 Week 2 established the data collection and validation methodology for the project.
 
