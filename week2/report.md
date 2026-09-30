@@ -368,16 +368,13 @@ Cross-Source Correlation
 6. Certificate Transparency Search — crt.sh  
    https://crt.sh/
 
-7. AlienVault Open Threat Exchange  
-   https://otx.alienvault.com/
-
-8. OSINT Framework  
+7. OSINT Framework  
    https://osintframework.com/
 
-9. SANS Institute — Cyber Security Whitepapers  
+8. SANS Institute — Cyber Security Whitepapers  
    https://www.sans.org/white-papers/
 
-10. MISP Project  
+9. MISP Project  
     https://www.misp-project.org/
 
 ---
