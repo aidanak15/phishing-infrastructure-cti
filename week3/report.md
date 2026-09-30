@@ -61,7 +61,7 @@ This structure allows indicators from different OSINT sources to be stored in a 
 
 The raw data was stored in:
 
-`raw_iocs.csv`
+`week3/raw_iocs.csv`
 
 ```csv
 value,type,source,confidence,status,tags,notes
