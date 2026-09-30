@@ -521,7 +521,7 @@ Possible extensions include:
 - [x] Data enrichment documented
 - [x] Correlation enabled for imported attributes
 - [x] Infrastructure relationships documented
-- [ ] MISP correlation graph screenshot added
+- [x] MISP correlation graph screenshot added
 - [x] Elastic Stack reviewed conceptually
 - [x] Sigma rules reviewed conceptually
 - [x] Limitations documented
