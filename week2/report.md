@@ -211,103 +211,124 @@ This result is especially relevant because VirusTotal had already shown a histor
 
 ## 9. Cross-Source Comparison
 
-The same indicator was compared across multiple sources.
+The same phishing infrastructure was analyzed across several independent OSINT and threat-intelligence sources.
 
-| Source | Indicator | Result |
-|---|---|---|
-| URLhaus / PhishTank | `[INSERT]` | `[INSERT RESULT]` |
-| VirusTotal | `[INSERT]` | `[INSERT RESULT]` |
-| AbuseIPDB | `[INSERT IP]` | `[INSERT RESULT]` |
-| ICANN Lookup | `[INSERT DOMAIN]` | `[INSERT RESULT]` |
-| crt.sh | `[INSERT DOMAIN]` | `[INSERT RESULT]` |
-| AlienVault OTX | `[INSERT]` | `[INSERT RESULT]` |
+| Source | Indicator | Result | Interpretation |
+|---|---|---|---|
+| PhishTank | `https://google.documentspartage.com/` | Verified as a valid phish and online | Confirms the URL was identified by the PhishTank community as phishing |
+| VirusTotal | `google.documentspartage.com` | 0/91 vendors flagged the domain as malicious; Fortinet classified it as Spam | The phishing subdomain was not widely detected by reputation engines at the time of analysis |
+| VirusTotal Passive DNS | `45.74.61.11` | 5/91 detections; resolved on 2026-09-25 | Shows infrastructure-level risk that was not visible from the domain verdict alone |
+| VirusTotal Relations | `microsoft.documentspartage.com` | Sibling subdomain identified, 0/91 detections | Suggests reuse of the same parent domain for multiple brand-themed subdomains |
+| AbuseIPDB | `45.74.61.11` | Abuse Confidence Score: 0%; 8 historical reports from 7 reporters | Indicates low current reputation risk but confirms historical abuse activity |
+| ICANN Lookup | `documentspartage.com` | Created on 2026-09-25; registrar: Hosting Concepts B.V. d/b/a Registrar.eu | Very recent registration provides additional suspicious context |
+| crt.sh | `documentspartage.com` | No certificates found | Certificate Transparency visibility was limited for the registered domain at the time of analysis |
 
 ### Key Observation
 
-The most important finding from the comparison was:
+The most important finding is that the different sources did not provide the same verdict.
 
-`[WRITE YOUR MAIN FINDING HERE]`
+PhishTank had already verified the URL as phishing, while VirusTotal showed no malicious detections for the phishing subdomain itself.
 
-Example:
+At the same time, VirusTotal passive DNS showed that the associated IP address had 5/91 detections, while AbuseIPDB assigned the same IP a current Abuse Confidence Score of 0%.
 
-Different intelligence sources provided different levels of context. One source identified the URL as malicious, while another source had limited or no detections. Infrastructure-level sources such as WHOIS and AbuseIPDB provided additional context that was not visible from URL reputation alone.
+ICANN data also showed that the registered domain had been created only a few days before the phishing submission.
 
----
-
-## 10. Data Source Mapping
-
-| Investigation Task | Primary Source | Secondary Source |
-|---|---|---|
-| Identify phishing URLs | URLhaus / PhishTank | AlienVault OTX |
-| Check URL/domain reputation | VirusTotal | AlienVault OTX |
-| Analyze IP reputation | AbuseIPDB | VirusTotal |
-| Check registration data | ICANN Lookup | WHOIS |
-| Identify certificates | crt.sh | — |
-| Find related indicators | AlienVault OTX | VirusTotal |
-
-This mapping defines which source should be used for each stage of phishing infrastructure analysis.
+This demonstrates that phishing infrastructure cannot be evaluated reliably using only one reputation source.
 
 ---
 
-## 11. Research Findings
+## 10. Research Findings
 
-### RQ1 — Which sources provide the most useful information?
+### RQ1 — Which open-source threat intelligence sources provide the most useful information for phishing infrastructure analysis?
 
-The most useful sources were `[INSERT SOURCES]` because they provided `[INSERT REASON]`.
+The most useful sources were PhishTank, VirusTotal, AbuseIPDB, and ICANN Lookup because each source provided a different type of information.
 
-No single platform provided all the required information.
+- PhishTank provided the strongest direct phishing verdict.
+- VirusTotal provided multi-vendor reputation data, passive DNS, and infrastructure relations.
+- AbuseIPDB provided historical IP abuse context.
+- ICANN Lookup provided domain registration information.
+
+No single source provided enough information to fully understand the infrastructure.
 
 ---
 
-### RQ2 — Can different OSINT sources disagree?
+### RQ2 — Can different OSINT platforms provide different or conflicting results for the same phishing indicator?
 
 Yes.
 
-For the selected sample, `[INSERT EXAMPLE OF DIFFERENCE]`.
-
-This demonstrates that threat-intelligence analysis should not rely on a single reputation platform.
+The selected URL was verified as phishing by PhishTank, but the subdomain `google.documentspartage.com` received 0/91 malicious detections in VirusTotal.
+The associated IP address `45.74.61.11` had 5/91 detections in VirusTotal, while AbuseIPDB currently rated it at 0% abuse confidence.
+These differences show that reputation systems use different datasets, detection methods, and update cycles.
 
 ---
 
-### RQ3 — Does combining multiple indicators improve analysis?
+### RQ3 — Does combining multiple independent indicators provide stronger evidence than relying on a single indicator?
 
 Yes.
 
-Combining URL, domain, IP, registration, certificate, and reputation data provided more context than analyzing only one indicator.
+The strongest conclusion came from combining several independent observations:
 
-The combined analysis showed `[INSERT CONCLUSION]`.
+- PhishTank confirmed the URL as phishing.
+- The parent domain was only a few days old.
+- The subdomain used the brand-like label `google`.
+- VirusTotal identified the IP address `45.74.61.11`.
+- The same parent domain also contained the sibling `microsoft.documentspartage.com`.
+- The IP had historical abuse reports.
+- Different threat-intelligence services returned different risk assessments.
+
+Together, these indicators provide significantly more context than any single reputation score.
+
+---
+
+## 11. Main Finding
+
+The Week 2 investigation showed that a phishing site can remain undetected by many automated reputation engines even after it has already been identified by another threat-intelligence community.
+
+The investigated infrastructure demonstrates the importance of cross-source correlation.
+
+A single `0/91` VirusTotal result could create a false sense of safety, but additional evidence from PhishTank, ICANN, passive DNS, and historical IP reputation provided a much stronger basis for analysis.
+
+This finding directly supports the project methodology: phishing infrastructure should be evaluated using multiple independent CTI and OSINT sources rather than a single verdict.
 
 ---
 
 ## 12. Limitations
 
-The Week 2 investigation has several limitations:
+The investigation has several limitations:
 
-- public intelligence sources can contain outdated information;
-- reputation results may change over time;
-- some services have API or request limits;
-- not every malicious domain appears in every threat feed;
-- WHOIS information may be privacy-protected;
-- shared hosting can make IP-based conclusions unreliable;
-- this investigation uses a limited number of real samples;
-- the results represent the state of the sources at the time of analysis.
+- Only one verified phishing sample was analyzed in detail.
+- VirusTotal results represent the state of vendor detections at the time of analysis and may change later.
+- AbuseIPDB confidence scores decay over time and may not reflect newly observed phishing use.
+- crt.sh returned no certificate records for the registered domain, limiting independent certificate analysis.
+- AlienVault OTX was unavailable during the investigation.
+- Shared hosting can make IP-based conclusions unreliable because one IP address may host unrelated domains.
+- Domain age is only contextual evidence and cannot independently prove malicious activity.
+- OSINT data can be incomplete, delayed, or inconsistent between sources.
 
 ---
 
 ## 13. Connection to the Final Project
 
-Week 2 establishes the data-collection layer of the phishing infrastructure analysis workflow.
+Week 2 established the data collection and validation methodology for the project.
 
-The results show that phishing infrastructure should be analyzed using multiple sources rather than a single reputation service.
+The collected evidence shows that phishing infrastructure analysis should use several intelligence layers:
 
-The collected indicators from this week will be used in Week 3 for:
-
-- filtering;
-- normalization;
-- deduplication;
-- enrichment;
-- correlation;
-- preparation for structured CTI analysis.
+```text
+Phishing Feed
+     ↓
+URL / Domain
+     ↓
+Reputation Analysis
+     ↓
+Passive DNS
+     ↓
+IP Reputation
+     ↓
+Domain Registration
+     ↓
+Certificate Data
+     ↓
+Cross-Source Correlation
 
 ---
 
@@ -331,16 +352,13 @@ The collected indicators from this week will be used in Week 3 for:
 6. Certificate Transparency Search — crt.sh  
    https://crt.sh/
 
-7. AlienVault Open Threat Exchange  
-   https://otx.alienvault.com/
-
-8. OSINT Framework  
+7. OSINT Framework  
    https://osintframework.com/
 
-9. SANS Institute — Cyber Security Whitepapers  
+8. SANS Institute — Cyber Security Whitepapers  
    https://www.sans.org/white-papers/
 
-10. MISP Project  
+9. MISP Project  
     https://www.misp-project.org/
 
 ---
@@ -349,13 +367,12 @@ The collected indicators from this week will be used in Week 3 for:
 
 - [x] Open-source and closed-source intelligence sources identified
 - [x] Relevant OSINT platforms selected
-- [ ] Real phishing sample collected from a public source
-- [ ] VirusTotal investigation completed
-- [ ] IP reputation investigation completed
-- [ ] WHOIS / ICANN investigation completed
-- [ ] Certificate Transparency investigation completed
-- [ ] AlienVault OTX investigation completed
-- [ ] Cross-source comparison completed
+- [x] Real phishing sample collected from a public source
+- [x] VirusTotal investigation completed
+- [x] IP reputation investigation completed
+- [x] WHOIS / ICANN investigation completed
+- [x] Certificate Transparency investigation completed
+- [x] Cross-source comparison completed
 - [x] Data source mapping prepared
-- [ ] Research questions answered using real evidence
+- [x] Research questions answered using real evidence
 - [x] Limitations documented
