@@ -209,31 +209,6 @@ This result is especially relevant because VirusTotal had already shown a histor
 
 ---
 
-## 8. AlienVault OTX Investigation
-
-The indicator was searched in AlienVault OTX to identify related indicators or threat-intelligence pulses.
-
-**Indicator:**  
-`[INSERT DOMAIN/IP/URL]`
-
-**Pulses found:**  
-`[INSERT NUMBER]`
-
-**Related indicators:**  
-`[INSERT RESULTS]`
-
-### Screenshot
-
-![OTX result](images/otx-result.png)
-
-### Interpretation
-
-AlienVault OTX provided `[INSERT CONTEXT]`.
-
-This type of threat-intelligence platform can reveal relationships between individual indicators and larger campaigns.
-
----
-
 ## 9. Cross-Source Comparison
 
 The same indicator was compared across multiple sources.
