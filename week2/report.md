@@ -344,6 +344,7 @@ Domain Registration
 Certificate Data
      ↓
 Cross-Source Correlation
+```
 
 ---
 
@@ -367,13 +368,16 @@ Cross-Source Correlation
 6. Certificate Transparency Search — crt.sh  
    https://crt.sh/
 
-7. OSINT Framework  
+7. AlienVault Open Threat Exchange  
+   https://otx.alienvault.com/
+
+8. OSINT Framework  
    https://osintframework.com/
 
-8. SANS Institute — Cyber Security Whitepapers  
+9. SANS Institute — Cyber Security Whitepapers  
    https://www.sans.org/white-papers/
 
-9. MISP Project  
+10. MISP Project  
     https://www.misp-project.org/
 
 ---
@@ -387,6 +391,7 @@ Cross-Source Correlation
 - [x] IP reputation investigation completed
 - [x] WHOIS / ICANN investigation completed
 - [x] Certificate Transparency investigation completed
+- [x] AlienVault OTX lookup attempted
 - [x] Cross-source comparison completed
 - [x] Data source mapping prepared
 - [x] Research questions answered using real evidence
