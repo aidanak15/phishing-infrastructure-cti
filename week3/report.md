@@ -331,19 +331,15 @@ The presence of both `google` and `microsoft` subdomains also shows how related 
 
 ## 13. MISP Correlation Graph
 
-MISP provides a Correlation Graph function that can be used to visualize relationships between attributes and events.
+MISP provides a Correlation Graph function for visualizing relationships between events and attributes.
 
-The graph was reviewed after the IOC attributes had been added and correlation had been enabled.
+In this local deployment, the graph contained only the current phishing investigation event because the MISP instance contains a single event and a small IOC dataset.
+
+This demonstrates the correlation functionality, while also showing the limitation of using a small standalone dataset.
 
 ### Evidence
 
 ![MISP correlation graph](images/misp-correlation.png)
-
-### Limitation
-
-Because this local MISP instance contains only one event and a small number of indicators, automatic cross-event correlations are limited.
-
-The main relationships in this project were identified through Week 2 OSINT analysis and then represented structurally in MISP.
 
 ---
 
