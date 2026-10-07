@@ -74,7 +74,7 @@ The attack can therefore:
 - capture the resulting authenticated session token or cookie;
 - allow the attacker to reuse the authenticated session.
 
-Sekoia and Elastic independently describe this reverse-proxy/AiTM architecture and the associated session-token theft. :contentReference[oaicite:3]{index=3}
+Sekoia and Elastic independently describe this reverse-proxy/AiTM architecture and the associated session-token theft. 
 
 ---
 
