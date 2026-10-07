@@ -37,7 +37,7 @@ The model describes a cyber intrusion through seven stages:
 
 The Cyber Kill Chain is intended to improve visibility into an intrusion and help defenders identify points where an attack can be detected or disrupted. :contentReference[oaicite:1]{index=1}
 
-![Cyber Kill Chain](images/cyber-kill-chain.png)
+![Cyber Kill Chain](week4/images/cyber-kill-chain.png)
 
 *Figure 1. Seven stages of the Lockheed Martin Cyber Kill Chain.*
 
