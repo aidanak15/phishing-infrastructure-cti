@@ -128,8 +128,8 @@ Cloud Account Access
 
 Tycoon2FA's reverse-proxy architecture is designed to relay the real authentication process rather than simply collecting a password. This allows the attacker to obtain authenticated session material after MFA has been completed. :contentReference[oaicite:5]{index=5}
 
-![Tycoon2FA AiTM authentication flow](images/tycoon2fa-aitm-flow.png)
-![Tycoon2FA AiTM authentication flow](images/tycoon2fa-aitm-flows.png)
+![Tycoon2FA AiTM authentication flow](image/tycoon2fa-aitm-flow.png)
+![Tycoon2FA AiTM authentication flow](image/tycoon2fa-aitm-flows.png)
 
 *Figure 2. Simplified Tycoon2FA adversary-in-the-middle authentication flow.*
 
@@ -212,7 +212,7 @@ Tycoon2FA campaigns have used several delivery mechanisms, including:
 
 Microsoft reports that the kit could support multiple phishing delivery methods and redirect the victim through intermediate infrastructure before presenting the phishing page. :contentReference[oaicite:7]{index=7}
 
-![Tycoon2FA phishing delivery example](images/tycoon2fa-phishing-page.png)
+![Tycoon2FA phishing delivery example](image/tycoon2fa-phishing-page.png)
 
 *Figure 3. Example of a Tycoon2FA phishing / authentication page.*
 
