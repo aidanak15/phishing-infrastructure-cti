@@ -257,8 +257,8 @@ The victim interacts with the phishing link and initiates the malicious workflow
 
 **T1557 — Adversary-in-the-Middle**
 
-The attacker positions infrastructure between the victim and legitimate services to intercept authentication information and session material. MITRE explicitly documents AiTM as a technique that can support credential and session-cookie theft. :contentReference[oaicite:8]{index=8}
-
+The attacker positions infrastructure between the victim and legitimate services to intercept authentication information and session material. MITRE explicitly documents AiTM as a technique that can support credential and session-cookie theft. 
+These techniques describe different parts of the same attack: T1204.001 represents the victim's interaction with the malicious link, while T1557 represents the adversary-in-the-middle authentication architecture.
 **Status:** Directly supported by the documented Tycoon2FA architecture.
 
 ---
