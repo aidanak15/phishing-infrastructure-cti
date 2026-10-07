@@ -318,13 +318,15 @@ Captured session information can also be forwarded to operator-controlled infras
 
 **T1071.001 — Application Layer Protocol: Web Protocols**
 
-Web protocols can be used for communication between malicious infrastructure and services.
+Web-based communication is used by the phishing infrastructure to relay authentication traffic between the victim, attacker-controlled infrastructure, and the legitimate identity provider.
 
 **T1557 — Adversary-in-the-Middle**
 
-The reverse proxy maintains the attacker's position between the victim and the legitimate service.
+The reverse proxy maintains the attacker's position between the victim and the legitimate service and enables interception of authentication information and session material.
 
 **Status:** Supported by the technical architecture described by Microsoft, Sekoia, and Elastic.
+
+**Mapping note:** T1557 is the more direct representation of the AiTM behavior, while T1071.001 describes the supporting web-based communication.
 
 ---
 
