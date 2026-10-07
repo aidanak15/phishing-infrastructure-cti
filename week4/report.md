@@ -308,7 +308,7 @@ Tycoon2FA uses an attacker-controlled reverse proxy to relay authentication traf
 
 The kit can use web communication and real-time bidirectional communication to relay authentication requests and responses.
 
-Sekoia documented WebSocket-based communication in Tycoon2FA, while Elastic identified server-side authentication activity associated with Node.js-style user agents such as `axios`, `node`, and `undici`. :contentReference[oaicite:10]{index=10}
+Sekoia documented WebSocket-based communication in Tycoon2FA, while Elastic identified server-side authentication activity associated with Node.js-style user agents such as `axios`, `node`, and `undici`. 
 
 Captured session information can also be forwarded to operator-controlled infrastructure for further use. :contentReference[oaicite:11]{index=11}
 
@@ -342,13 +342,13 @@ Potential post-compromise actions include:
 - sending follow-on phishing messages;
 - conducting business email compromise and other account-abuse activity.
 
-Microsoft reports that Tycoon2FA enabled attackers to maintain access to accounts through stolen session cookies even after password changes unless active sessions and tokens were revoked. :contentReference[oaicite:12]{index=12}
+Microsoft reports that Tycoon2FA enabled attackers to maintain access to accounts through stolen session cookies even after password changes unless active sessions and tokens were revoked. 
 
 ### MITRE ATT&CK
 
 **T1539 — Steal Web Session Cookie**
 
-Session cookies can be stolen and reused to authenticate to web applications. MITRE explicitly identifies malicious proxy frameworks as a way of capturing session cookies. :contentReference[oaicite:13]{index=13}
+Session cookies can be stolen and reused to authenticate to web applications. MITRE explicitly identifies malicious proxy frameworks as a way of capturing session cookies. 
 
 **T1078.004 — Valid Accounts: Cloud Accounts**
 
@@ -382,7 +382,7 @@ A compromised account can be used to send additional phishing messages inside an
 | **Command & Control** | Reverse proxy and web communication | T1071.001, T1557 | Supported |
 | **Actions on Objectives** | Session-cookie theft, cloud-account access, email collection and internal phishing | T1539, T1078.004, T1114.002, T1564.008, T1534 | Campaign-level evidence |
 
-![ATT&CK mapping](images/attack-mapping.png)
+![ATT&CK mapping](image/attack-mapping.png)
 
 *Figure 4. Project-authored mapping of Tycoon2FA behavior to MITRE ATT&CK techniques.*
 
@@ -448,7 +448,7 @@ The Lockheed Martin model can also be used to identify points where defenders ca
 
 Microsoft's remediation guidance includes phishing-resistant MFA, revoking active sessions and tokens, removing unauthorized MFA devices, and removing malicious inbox rules. :contentReference[oaicite:15]{index=15}
 
-![Defensive matrix](images/defensive-matrix.png)
+![Defensive matrix](image/defensive-matrix.png)
 
 *Figure 5. Project-authored defensive mapping across the Kill Chain.*
 
