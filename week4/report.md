@@ -90,7 +90,7 @@ Sekoia and Elastic independently describe this reverse-proxy/AiTM architecture a
 | March 2026 | Microsoft reports seizure of 330 active domains associated with the operation |
 | April 2026 | eSentire reports adaptation of Tycoon2FA tradecraft to OAuth device-code phishing |
 
-Microsoft reported that Tycoon2FA used fast-moving infrastructure, with many campaign-specific fully qualified domain names lasting only 24–72 hours. The March 2026 disruption targeted 330 active domains supporting the operation. :contentReference[oaicite:4]{index=4}
+Microsoft reported that Tycoon2FA used fast-moving infrastructure, with many campaign-specific fully qualified domain names lasting only 24–72 hours. The March 2026 disruption targeted 330 active domains supporting the operation. 
 
 ---
 
@@ -310,7 +310,7 @@ The kit can use web communication and real-time bidirectional communication to r
 
 Sekoia documented WebSocket-based communication in Tycoon2FA, while Elastic identified server-side authentication activity associated with Node.js-style user agents such as `axios`, `node`, and `undici`. 
 
-Captured session information can also be forwarded to operator-controlled infrastructure for further use. :contentReference[oaicite:11]{index=11}
+Captured session information can also be forwarded to operator-controlled infrastructure for further use. 
 
 ### MITRE ATT&CK
 
@@ -446,7 +446,7 @@ The Lockheed Martin model can also be used to identify points where defenders ca
 | **C2** | Monitor relay domains, IPs and suspicious authentication traffic | Block malicious infrastructure and suspicious web traffic |
 | **Actions on Objectives** | Detect unusual cloud sign-ins, mailbox rules and session reuse | Revoke active sessions/tokens and remove malicious changes |
 
-Microsoft's remediation guidance includes phishing-resistant MFA, revoking active sessions and tokens, removing unauthorized MFA devices, and removing malicious inbox rules. :contentReference[oaicite:15]{index=15}
+Microsoft's remediation guidance includes phishing-resistant MFA, revoking active sessions and tokens, removing unauthorized MFA devices, and removing malicious inbox rules. 
 
 ![Defensive matrix](image/defensive-matrix.png)
 
@@ -663,10 +663,3 @@ AI was not treated as an independent source of threat intelligence, and no AI-ge
 - [x] Cyber Kill Chain and MITRE ATT&CK compared
 - [x] Connection to Weeks 1–3 documented
 - [x] References added
-- [ ] `cyber-kill-chain.png` added
-- [ ] `tycoon2fa-aitm-flow.png` added
-- [ ] `tycoon2fa-phishing-page.png` added
-- [ ] `tycoon2fa-redirect-chain.png` added
-- [ ] `attack-mapping.png` added
-- [ ] `defensive-matrix.png` added
-- [ ] Final commit pushed to GitHub
