@@ -1,7 +1,7 @@
 # Week 4 — The Cyber Kill Chain
 
 **Project:** Cyber Threat Intelligence Analysis of Phishing Infrastructure  
-**Case study:** Tycoon2FA AiTM Phishing-as-a-Service  
+**Case study:** Tycoon2FA Adversary-in-the-Middle (AiTM) Phishing-as-a-Service  
 **Frameworks:** Lockheed Martin Cyber Kill Chain and MITRE ATT&CK  
 
 | What we produced | File |
