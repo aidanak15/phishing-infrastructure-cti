@@ -35,7 +35,7 @@ The model describes a cyber intrusion through seven stages:
 | 6 | Command & Control | Maintain communication with attacker-controlled infrastructure |
 | 7 | Actions on Objectives | Achieve the final objective of the attack |
 
-The Cyber Kill Chain is intended to improve visibility into an intrusion and help defenders identify points where an attack can be detected or disrupted. :contentReference[oaicite:1]{index=1}
+The Cyber Kill Chain is intended to improve visibility into an intrusion and help defenders identify points where an attack can be detected or disrupted. 
 
 ![Cyber Kill Chain](image/cyber-kill-chain.png)
 
@@ -126,7 +126,7 @@ Attacker Reuses Authenticated Session
 Cloud Account Access
 ```
 
-Tycoon2FA's reverse-proxy architecture is designed to relay the real authentication process rather than simply collecting a password. This allows the attacker to obtain authenticated session material after MFA has been completed. :contentReference[oaicite:5]{index=5}
+Tycoon2FA's reverse-proxy architecture is designed to relay the real authentication process rather than simply collecting a password. This allows the attacker to obtain authenticated session material after MFA has been completed.
 
 ![Tycoon2FA AiTM authentication flow](image/tycoon2fa-aitm-flow.png)
 ![Tycoon2FA AiTM authentication flow](image/tycoon2fa-aitm-flows.png)
@@ -210,7 +210,7 @@ Tycoon2FA campaigns have used several delivery mechanisms, including:
 - SVG attachments;
 - HTML attachments.
 
-Microsoft reports that the kit could support multiple phishing delivery methods and redirect the victim through intermediate infrastructure before presenting the phishing page. :contentReference[oaicite:7]{index=7}
+Microsoft reports that the kit could support multiple phishing delivery methods and redirect the victim through intermediate infrastructure before presenting the phishing page. 
 
 ![Tycoon2FA phishing delivery example](image/tycoon2fa-phishing-page.png)
 
@@ -277,7 +277,7 @@ Attackers using this type of infrastructure may:
 - create mailbox rules;
 - retain access to cloud resources.
 
-Elastic specifically describes detection of unusual device registration associated with Tycoon2FA and identifies the identity-persistence step as an important part of the attack chain. :contentReference[oaicite:9]{index=9}
+Elastic specifically describes detection of unusual device registration associated with Tycoon2FA and identifies the identity-persistence step as an important part of the attack chain.
 
 ### MITRE ATT&CK
 
