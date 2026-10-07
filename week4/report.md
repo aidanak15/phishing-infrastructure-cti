@@ -129,6 +129,7 @@ Cloud Account Access
 Tycoon2FA's reverse-proxy architecture is designed to relay the real authentication process rather than simply collecting a password. This allows the attacker to obtain authenticated session material after MFA has been completed. :contentReference[oaicite:5]{index=5}
 
 ![Tycoon2FA AiTM authentication flow](images/tycoon2fa-aitm-flow.png)
+![Tycoon2FA AiTM authentication flow](images/tycoon2fa-aitm-flows.png)
 
 *Figure 2. Simplified Tycoon2FA adversary-in-the-middle authentication flow.*
 
