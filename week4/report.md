@@ -177,7 +177,7 @@ Tycoon2FA provides reusable phishing infrastructure and functionality such as:
 
 The platform therefore reduces the technical effort required for an operator to conduct an AiTM phishing campaign.
 
-**Evidence:** Microsoft and Sekoia document reusable Tycoon2FA phishing infrastructure and its technical capabilities. :contentReference[oaicite:6]{index=6}
+**Evidence:** Microsoft and Sekoia document reusable Tycoon2FA phishing infrastructure and its technical capabilities. 
 
 **Status:** Supported at campaign level.
 
