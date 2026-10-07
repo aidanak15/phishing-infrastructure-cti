@@ -7,10 +7,10 @@
 | What we produced | File |
 |---|---|
 | Seven-stage analysis of the Tycoon2FA phishing operation | This report |
-| Cyber Kill Chain diagram | `images/cyber-kill-chain.png` |
-| Tycoon2FA AiTM attack-flow diagram | `images/tycoon2fa-aitm-flow.png` |
-| Phishing-page demonstration | `images/tycoon2fa-phishing-page.png` |
-| Redirect / infrastructure demonstration | `images/tycoon2fa-redirect-chain.png` |
+| Cyber Kill Chain diagram | `image/cyber-kill-chain.png` |
+| Tycoon2FA AiTM attack-flow diagram | `image/tycoon2fa-aitm-flow.png` |
+| Phishing-page demonstration | `image/tycoon2fa-phishing-page.png` |
+| Redirect / infrastructure demonstration | `image/tycoon2fa-redirect-chain.png` |
 | Kill Chain → MITRE ATT&CK mapping | Section 5 |
 | IOC → Kill Chain relationship | Section 6 |
 | Defensive analysis and attack breakpoints | Section 7 |
