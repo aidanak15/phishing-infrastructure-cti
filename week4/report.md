@@ -62,7 +62,7 @@ The two frameworks are therefore complementary.
 
 Tycoon2FA is a Phishing-as-a-Service (PhaaS) platform that provides adversary-in-the-middle (AiTM) phishing capabilities.
 
-Microsoft Threat Intelligence first observed Tycoon2FA in August 2023 and associated the platform with the threat actor tracked as **Storm-1747**. Microsoft reported that the service scaled to campaigns reaching more than 500,000 organizations per month and enabled large numbers of phishing attempts designed to bypass multifactor authentication. :contentReference[oaicite:2]{index=2}
+Microsoft Threat Intelligence first observed Tycoon2FA in August 2023 and associated the platform with the threat actor tracked as **Storm-1747**. Microsoft reported that the service scaled to campaigns reaching more than 500,000 organizations per month and enabled large numbers of phishing attempts designed to bypass multifactor authentication. 
 
 Unlike a traditional credential-harvesting page, Tycoon2FA can operate as a reverse proxy between the victim and the legitimate identity provider.
 
