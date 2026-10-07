@@ -284,13 +284,15 @@ Elastic specifically describes detection of unusual device registration associat
 
 **T1098.005 — Account Manipulation: Device Registration**
 
-A new device or authenticator can be registered to maintain access to an account. 
+A new device or authenticator can be registered to maintain access to an account.
 
 **T1564.008 — Hide Artifacts: Email Hiding Rules**
 
-Mailbox rules can be used to conceal activity and reduce the chance of discovery.
+Mailbox rules can be used to conceal attacker-related messages and reduce the chance of discovery.
 
 **Status:** Supported at campaign level.
+
+These behaviors are not required for every Tycoon2FA campaign. They are treated here as possible post-compromise persistence or defense-evasion actions.
 
 ### Interpretation
 
