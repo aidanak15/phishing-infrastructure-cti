@@ -213,6 +213,7 @@ Tycoon2FA campaigns have used several delivery mechanisms, including:
 Microsoft reports that the kit could support multiple phishing delivery methods and redirect the victim through intermediate infrastructure before presenting the phishing page. 
 
 ![Tycoon2FA phishing delivery example](image/tycoon2fa-phishing-page.png)
+![Tycoon2FA phishing delivery example](image/tycoon2fa-redirect-chain.png)
 
 *Figure 3. Example of a Tycoon2FA phishing / authentication page.*
 
