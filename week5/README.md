@@ -14,7 +14,6 @@
 | Execute queries in Splunk or ELK | Five core investigative searches were executed in Splunk; see Section 5 and `screenshots/`. The original query reference files are also included |
 | Present findings and limitations | Sections 5–7; independent local analysis completed |
 | Document weekly progress on GitHub | Commit instructions in `SETUP.md`; no remote commits claimed |
-| Defend in 7–8 minutes | `DEFENSE.md` |
 
 ## 2. Hunting models
 
