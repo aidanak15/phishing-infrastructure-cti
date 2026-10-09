@@ -1,0 +1,30 @@
+// Q0 - after uploading dns.csv into index=main sourcetype=phish_dns; run each query separately
+index=main sourcetype=phish_dns
+| stats count AS dns_events dc(event_id) AS unique_ids dc(hostname) AS hosts
+
+// Q1 - domain lookalike candidates; endswith check includes legitimate subdomains
+index=main sourcetype=phish_dns
+| eval d=lower(domain)
+| where (like(d,"%asterpay%") OR like(d,"%cityparcel%")) AND NOT (d="asterpay.example" OR like(d,"%.asterpay.example") OR d="cityparcel.example" OR like(d,"%.cityparcel.example"))
+| stats count AS dns_requests dc(hostname) AS hosts values(answer_ip) AS ips by domain
+| sort - dns_requests
+
+// Q2 - examine candidate domains and affected devices, same criteria
+index=main sourcetype=phish_dns
+| eval d=lower(domain)
+| where (like(d,"%asterpay%") OR like(d,"%cityparcel%")) AND NOT (d="asterpay.example" OR like(d,"%.asterpay.example") OR d="cityparcel.example" OR like(d,"%.cityparcel.example"))
+| stats count AS requests values(answer_ip) AS ips by hostname domain
+| sort - requests
+
+// Q3 - HTTP POST to candidate domains (proxy telemetry is required); POST is NOT proof of stolen credentials
+index=main sourcetype=phish_proxy method=POST
+| eval d=lower(domain)
+| where (like(d,"%asterpay%") OR like(d,"%cityparcel%")) AND NOT (d="asterpay.example" OR like(d,"%.asterpay.example") OR d="cityparcel.example" OR like(d,"%.cityparcel.example"))
+| table timestamp hostname domain method url_path bytes_out
+
+// Q4 - infrastructure overlap: candidate domains sharing an answer IP
+index=main sourcetype=phish_dns
+| eval d=lower(domain)
+| where (like(d,"%asterpay%") OR like(d,"%cityparcel%")) AND NOT (d="asterpay.example" OR like(d,"%.asterpay.example") OR d="cityparcel.example" OR like(d,"%.cityparcel.example"))
+| stats dc(domain) AS domain_count values(domain) AS related_domains by answer_ip
+| where domain_count>1

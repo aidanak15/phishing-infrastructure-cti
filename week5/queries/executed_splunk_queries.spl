@@ -1,0 +1,37 @@
+# S1 — Verify DNS CSV ingestion
+index=phishing_logs source="dns.csv"
+| stats count AS total_events dc(event_id) AS unique_events
+
+# S2 — Broad hypothesis-driven keyword hunt
+index=phishing_logs source="dns.csv"
+| where match(lower(domain), "(login|verify|account|secure|payment|update)")
+| stats count AS dns_requests dc(hostname) AS affected_hosts values(hostname) AS host_list by domain
+| sort - dns_requests
+
+# S3 — Domains sharing DNS answer IPs
+index=phishing_logs source="dns.csv"
+| stats count AS dns_requests dc(domain) AS domain_count values(domain) AS domains by answer_ip
+| where domain_count > 1
+| sort - domain_count
+
+# S4 — Verify proxy CSV ingestion
+index=phishing_logs source="proxy.csv"
+| stats count AS total_events dc(event_id) AS unique_events
+
+# S5 — Web activity to candidates
+index=phishing_logs source="proxy.csv"
+| where match(lower(domain), "(verify|account|secure|confirm)")
+| stats count AS requests count(eval(upper(method)="POST")) AS post_requests values(method) AS methods values(hostname) AS affected_hosts by domain
+| sort - post_requests
+
+# S6 — Inspect the POST event
+index=phishing_logs source="proxy.csv" domain="asterpay-verify-login.example" method="POST"
+| table _time hostname domain method url status bytes_out
+
+# S7 — Co-occurrence of DNS and proxy events
+index=phishing_logs (source="dns.csv" OR source="proxy.csv")
+| where match(lower(domain), "(verify|account|secure|confirm)")
+| eval log_type=if(source="dns.csv", "DNS", "PROXY")
+| stats count(eval(log_type="DNS")) AS dns_events count(eval(log_type="PROXY")) AS proxy_events count(eval(log_type="PROXY" AND upper(method)="POST")) AS post_events by hostname domain
+| where dns_events>0 AND proxy_events>0
+| sort - post_events

@@ -1,0 +1,115 @@
+{
+  "dataset": {
+    "dns_events": 943,
+    "proxy_events": 60,
+    "unique_dns_ids": 943,
+    "unique_proxy_ids": 60,
+    "distinct_dns_hosts": 12
+  },
+  "h1_candidates": [
+    {
+      "domain": "asterpay-account-review.example",
+      "dns_requests": 12,
+      "hosts": [
+        "WS-07"
+      ],
+      "answer_ips": [
+        "203.0.113.60"
+      ]
+    },
+    {
+      "domain": "asterpay-help.example",
+      "dns_requests": 22,
+      "hosts": [
+        "WS-01",
+        "WS-02",
+        "WS-03",
+        "WS-04",
+        "WS-05",
+        "WS-06",
+        "WS-07",
+        "WS-08",
+        "WS-09",
+        "WS-10",
+        "WS-11"
+      ],
+      "answer_ips": [
+        "198.51.100.10"
+      ]
+    },
+    {
+      "domain": "asterpay-verify-login.example",
+      "dns_requests": 14,
+      "hosts": [
+        "WS-03"
+      ],
+      "answer_ips": [
+        "203.0.113.50"
+      ]
+    },
+    {
+      "domain": "cityparcel-archive.example",
+      "dns_requests": 21,
+      "hosts": [
+        "WS-01",
+        "WS-02",
+        "WS-03",
+        "WS-04",
+        "WS-05",
+        "WS-06",
+        "WS-07",
+        "WS-08",
+        "WS-09",
+        "WS-11",
+        "WS-12"
+      ],
+      "answer_ips": [
+        "198.51.100.11"
+      ]
+    },
+    {
+      "domain": "cityparcel-delivery-confirm.example",
+      "dns_requests": 8,
+      "hosts": [
+        "WS-09"
+      ],
+      "answer_ips": [
+        "203.0.113.60"
+      ]
+    },
+    {
+      "domain": "cityparcel-track-secure.example",
+      "dns_requests": 9,
+      "hosts": [
+        "WS-03"
+      ],
+      "answer_ips": [
+        "203.0.113.50"
+      ]
+    }
+  ],
+  "h2_post_candidates": [
+    {
+      "domain": "asterpay-verify-login.example",
+      "hostname": "WS-03",
+      "url_path": "/session",
+      "bytes_out": 420
+    }
+  ],
+  "h3_shared_ips": [
+    {
+      "ip": "203.0.113.50",
+      "domains": [
+        "asterpay-verify-login.example",
+        "cityparcel-track-secure.example"
+      ]
+    },
+    {
+      "ip": "203.0.113.60",
+      "domains": [
+        "asterpay-account-review.example",
+        "cityparcel-delivery-confirm.example"
+      ]
+    }
+  ]
+}

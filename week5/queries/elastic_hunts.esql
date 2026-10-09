@@ -1,0 +1,35 @@
+// Requires CSV mapping to keyword fields; run each block independently in Kibana ES|QL.
+// Q0
+FROM phish-dns
+| STATS dns_events=COUNT(*), hosts=COUNT_DISTINCT(hostname), unique_ids=COUNT_DISTINCT(event_id)
+
+// Q1 candidate names (supported on keyword fields)
+FROM phish-dns
+| WHERE (domain LIKE "*asterpay*" OR domain LIKE "*cityparcel*")
+  AND domain != "asterpay.example" AND domain NOT LIKE "*.asterpay.example"
+  AND domain != "cityparcel.example" AND domain NOT LIKE "*.cityparcel.example"
+| STATS dns_requests=COUNT(*), hosts=COUNT_DISTINCT(hostname) BY domain
+| SORT dns_requests DESC
+
+// Q2 host/domain pairs
+FROM phish-dns
+| WHERE (domain LIKE "*asterpay*" OR domain LIKE "*cityparcel*")
+  AND domain != "asterpay.example" AND domain NOT LIKE "*.asterpay.example"
+  AND domain != "cityparcel.example" AND domain NOT LIKE "*.cityparcel.example"
+| STATS requests=COUNT(*) BY hostname, domain
+| SORT requests DESC
+
+// Q3 proxy POST candidates
+FROM phish-proxy
+| WHERE method == "POST" AND (domain LIKE "*asterpay*" OR domain LIKE "*cityparcel*")
+  AND domain != "asterpay.example" AND domain NOT LIKE "*.asterpay.example"
+  AND domain != "cityparcel.example" AND domain NOT LIKE "*.cityparcel.example"
+| KEEP timestamp, hostname, domain, method, url_path, bytes_out
+
+// Q4 shared IP
+FROM phish-dns
+| WHERE (domain LIKE "*asterpay*" OR domain LIKE "*cityparcel*")
+  AND domain != "asterpay.example" AND domain NOT LIKE "*.asterpay.example"
+  AND domain != "cityparcel.example" AND domain NOT LIKE "*.cityparcel.example"
+| STATS domains=COUNT_DISTINCT(domain) BY answer_ip
+| WHERE domains > 1
