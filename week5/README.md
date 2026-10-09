@@ -2,7 +2,7 @@
 
 **Group project:** Cyber Threat Intelligence Analysis of Phishing Infrastructure  
 **Course:** Astana IT University, 2026–2027 · Section 3.3, Week 5  
-**Members:** [add members] · **Group:** [add group]  
+**Members:** Kurmangaliyeva A., Saduakhassova A. · **Group:** CS-2417  
 **Status:** Splunk Enterprise searches executed on the synthetic DNS and proxy CSVs; screenshots of actual Splunk query results are bundled. No production logs, attacks, or live phishing feeds were tested.
 
 ## 1. Week 5 assignment alignment
