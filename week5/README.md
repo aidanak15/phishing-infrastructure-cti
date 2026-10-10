@@ -94,7 +94,7 @@ These are fabricated shared DNS answers designed to illustrate an infrastructure
 
 ![Synthetic phishing infrastructure graph](images/infrastructure_graph.png)
 
-**Important:** This is a locally generated diagram, not a screenshot from Splunk or Kibana. To satisfy the practical requirement, add your own actual screenshots to `screenshots/` after executing the searches.
+**Important:** This is a locally generated diagram, not a screenshot from Splunk or Kibana. 
 
 ### Search S1 — Verify DNS CSV ingestion
 
