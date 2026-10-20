@@ -1,193 +1,151 @@
-# Week 6 — MITRE ATT&CK Framework
+# Week 6 — MITRE ATT&CK Technique Analysis
 
-## Project
-Cyber Threat Intelligence Analysis of Phishing Infrastructure
+**Project:** Cyber Threat Intelligence Analysis of Phishing Infrastructure  
+**Selected technique:** T1566.002 — Phishing: Spearphishing Link  
+**Tactic:** Initial Access  
+**Environment:** Offline analysis of redacted email samples, local macOS HTTP demonstration, Splunk Enterprise, MITRE ATT&CK Navigator
 
-## 1. Introduction
-MITRE ATT&CK is a knowledge base of adversary tactics,
-techniques, and procedures (TTPs) derived from observations
-of real-world adversary behavior.
+## 1. Introduction and objective
 
-This weekly increment examines phishing-link indicators
-using redacted real-world email samples and a controlled
-local HTTP demonstration.
+MITRE ATT&CK organizes observed adversary behavior into tactics (objectives), techniques (methods), and procedures (specific implementations). This exercise studies **T1566.002 — Spearphishing Link**, evaluates phishing-related email artifacts, demonstrates a benign link-access event in a controlled local environment, and maps the resulting evidence to the ATT&CK framework.
 
-## 2. Objectives
-- Explain ATT&CK tactics, techniques, and procedures.
-- Study T1566.002 — Spearphishing Link.
-- Analyze phishing-related email content and hyperlinks.
-- Correlate common link infrastructure using Splunk.
-- Record observable HTTP activity in a local laboratory.
-- Map findings to MITRE ATT&CK.
-- Document evidence and limitations.
+**Assignment objectives:** study one technique; conduct a controlled and safe demonstration related to that technique; document evidence; and map observations to ATT&CK tactics and techniques. The demonstration is **partial**: it validates local link-access telemetry rather than reproducing the delivery of a real phishing message.
 
-## 3. ATT&CK Technique Analysis
-A tactic describes an adversary's objective.
-A technique describes how that objective may be achieved.
-A procedure is a specific implementation of a technique.
+## 2. Tactics, techniques and procedures
 
-Selected technique:
-- Tactic: Initial Access
-- Technique: T1566 — Phishing
-- Sub-technique: T1566.002 — Spearphishing Link
+- **Tactic — Initial Access:** the adversary's objective of gaining a foothold in a target environment.
+- **Technique — T1566 Phishing:** attempts to gain access by using phishing messages.
+- **Sub-technique — T1566.002 Spearphishing Link:** phishing messages include a link intended to lead a recipient toward an attacker-controlled destination or follow-on action.
+- **Procedure:** the concrete message, destination, and follow-on steps used in a particular campaign. This lab does not attribute either examined email to a named threat actor or confirm a complete adversary procedure.
 
-Spearphishing Link involves using links in targeted
-phishing messages to support an initial-access attempt.
+## 3. Real-world threat scenario and research hypothesis
 
-Official reference:
-https://attack.mitre.org/techniques/T1566/002/
+A common phishing-link scenario involves an account-security or service-interruption pretext, a link embedded in an email, and an attempted recipient action. Analysts can investigate email wording, hyperlink structures, apparent destinations, and subsequent web or endpoint logs. None of these features alone proves maliciousness or compromise.
 
-## 4. Dataset and Methodology
-Source: https://github.com/cw-l/email-corpus
+**Hypothesis H1:** two selected redacted emails will show a common hostname and characteristics consistent with a potential phishing-link lure.  
+**Hypothesis H2:** Splunk can identify a successful request to a benign local page during a controlled demonstration.  
+**Boundary:** H1 concerns email artifacts; H2 concerns local HTTP telemetry. A successful H2 does **not** independently prove T1566.002 occurred.
 
-The source repository contains redacted real-world
-phishing-related email samples. Two samples were selected
-and examined offline.
+## 4. Dataset and research integrity
 
-The analysis considered:
-- Email subject and account-related urgency themes
-- HTML hyperlink counts
-- Unique hyperlink counts
-- Shared hostnames
-- URL fragments and query parameters
+**Source:** [cw-l/email-corpus](https://github.com/cw-l/email-corpus), a corpus of redacted email samples intended for security research and education. Two `.eml` samples were inspected offline. Their routing details or contributor identifiers may be removed, and defanged links must not be treated as verified live indicators.
 
-URLs were not visited and were not used as live
-threat intelligence indicators.
+The analyst used Python email/HTML parsing to review headers and count hyperlink attributes, compare hostnames, inspect fragment/query presence, and create an aggregate CSV. No links from these samples were opened. The CSV is derived analysis data; it is **not** the original email evidence. The underlying email content and the exact original full link paths are not included in this repository.
 
-## 5. Email Analysis Results
+## 5. Observations from two email samples
 
-| Metric | Email 1 | Email 2 |
+| Measurement | Email_1 | Email_2 |
 |---|---:|---:|
 | HTML hyperlinks | 7 | 5 |
-| Unique full URLs | 7 | 5 |
-| URLs with fragments | 7 | 5 |
-| URLs with query parameters | 0 | 0 |
+| Unique full-link values | 7 | 5 |
+| Links with URL fragments | 7 | 5 |
+| Links with query strings | 0 | 0 |
+| Observed defanged hostname | `storage[.]googleapis[.]com` | `storage[.]googleapis[.]com` |
 
-Both messages referenced the defanged hostname
-`storage[.]googleapis[.]com`.
+The two subject lines communicated account restriction/suspension themes. Across the two samples, **12 hyperlinks** were counted. Each sample contained one unique parsed hostname in the investigated link set; both samples shared that hostname. Earlier analysis also found a matching **path-hash prefix** across the samples, which indicates a common parsed path value under that specific extraction method, not necessarily identical complete URLs.
 
-The shared hostname alone does not establish malicious
-infrastructure or attribution to the same attacker.
+**Interpretation:** common hosting and similar account-related pretexts justify further investigation. `storage.googleapis.com` is a legitimate cloud storage hostname and should **not** be labeled malicious solely because it appears in these messages. The original links were not visited and their destination behavior was not established.
 
 ![Email analysis](screenshots/01_email_analysis.png)
 
-## 6. Infrastructure Correlation
-Two examined emails contained a combined total of
-12 HTML hyperlinks referencing the same hostname.
+## 6. Email infrastructure correlation in Splunk
 
-This provides an observable correlation between
-the selected samples, but does not establish
-that the hostname itself is malicious.
+A structured two-row CSV (`data/week6_email_analysis.csv`) was imported into Splunk index `phishing_week6`. The analyst grouped rows by shared domain to count related emails and sum their extracted hyperlink counts.
+
+```spl
+index=phishing_week6 email_id=*
+| stats count AS email_count sum(html_links) AS total_links values(email_id) AS related_emails by domain
+```
+
+**Observed:** `email_count=2`, `total_links=12`; the two email IDs are associated with the same defanged hostname. This is a correlation of two manually selected samples, **not** evidence of a common attacker or an active campaign.
 
 ![Domain correlation](screenshots/02_domain_correlation.png)
 
-## 7. ATT&CK Navigator
-A Navigator layer was created to highlight
-T1566.002 under the Initial Access tactic.
+## 7. Controlled simulation design: where the ATT&CK behavior is represented
 
-File: `navigator/week6_attack_layer.json`
+**Scope:** a non-delivered, fictional training-message description and a **local-only** demonstration of a benign page visit. No impersonation of a real organization, third-party link, credential form, or outbound message is used.
 
-The technique mapping is a research hypothesis,
-not proof of a successful intrusion.
+The training narrative describes a fictional recipient encountering a routine account-notice message with a link to an explicitly labeled *educational* page hosted on `127.0.0.1`. The narrative provides context for the **link-in-message** component of T1566.002. This step is a *scenario description*, not a delivered phishing email; it was **not** monitored as email delivery telemetry.
 
-![ATT&CK Navigator](screenshots/03_attack_navigator.png)
+The actual lab action was a browser request to an educational `index.html` served on `127.0.0.1:8088`. The page stated that it was a local lab and collected no credentials. The server logged `GET /index.html HTTP/1.1` with status **200**, along with two 404-related log lines (one for a missing favicon). A **GET 200** confirms retrieval of the local page, not a successful phishing attempt.
 
-## 8. Controlled Laboratory Demonstration
-A harmless educational page was hosted locally
-using Python's HTTP server on `127.0.0.1:8088`.
+![Local simulation page](screenshots/04_local_simulation.png)
+![Local HTTP server log](screenshots/05_http_server_log.png)
 
-The browser requested `/index.html`, and the
-server returned HTTP status 200.
+The test plan and HTML source are preserved under `simulation/`.
 
-No external websites were visited during the
-local demonstration.
+## 8. Splunk detection and investigation
 
-![Local page](screenshots/04_local_simulation.png)
+**Ingest configuration:** index `phishing_week6`, source `http_server.log`, sourcetype `week6_http_log`. Splunk returned **three HTTP log events**.
 
-![HTTP server log](screenshots/05_http_server_log.png)
+![HTTP events in Splunk](screenshots/06_http_events_splunk.png)
 
-## 9. Splunk Log Investigation
-The local HTTP log was imported into Splunk.
+The following verified SPL query extracts method, path, and status from Python HTTP-server log lines, then filters the recorded visit:
 
-Configuration:
-- Index: `phishing_week6`
-- Sourcetype: `week6_http_log`
-- Source: `http_server.log`
+```spl
+index=phishing_week6 sourcetype=week6_http_log
+| rex field=_raw "\"(?<http_method>GET|POST) (?<url_path>[^ ]+) HTTP/[^\"]+\" (?<http_status>\d{3})"
+| search http_method="GET" url_path="/index.html" http_status="200"
+| table _time http_method url_path http_status source
+```
 
-Three log entries were observed, including one
-successful request to `/index.html` and a
-404 response for `/favicon.ico`.
+**Observed result:** one match, timestamp `2026-10-20 18:02:54`, `GET`, `/index.html`, status `200`, source `http_server.log`. The saved query is in `queries/week6_http_detection.spl`.
 
-![Imported events](screenshots/06_http_events_splunk.png)
+![Successful local HTTP request](screenshots/07_http_detection.png)
 
-The detection query is available in:
-`queries/week6_http_detection.spl`
+### Detection rationale and limitations
 
-The query extracted the HTTP method, path, and
-status code and identified one successful
-GET request to `/index.html`.
+- **Fields checked:** `_raw` supplies the original server line; `rex` extracts `http_method`, `url_path`, `http_status`; `source` identifies the input; `_time` indicates when the event was recorded.
+- **Positive condition:** a GET to the known **local lab path** with HTTP 200. It detects page access, **not phishing**.
+- **False positives:** any ordinary user, administrator, test client, browser refresh, or health check could request the same path and receive HTTP 200.
+- **Blind spots:** no email delivery logs, sender reputation, recipient identity, browser URL context, endpoint execution, credential activity, or proof that the request originated from an email click were collected. Without these additional sources, the request cannot be linked to a delivered lure.
+- **Defender next steps:** in a real authorized environment, correlate email security logs, URL click telemetry, proxy/DNS logs and endpoint events before labeling activity as phishing. Do not block a shared cloud hostname based on this lab.
 
-![HTTP detection](screenshots/07_http_detection.png)
+## 9. ATT&CK mapping and evidentiary confidence
 
-## 10. ATT&CK Mapping
+| Activity or observation | ATT&CK tactic | Candidate technique | Evidence | Confirmation |
+|---|---|---|---|---|
+| Account-restriction and suspension pretexts in two redacted emails | Initial Access (context) | T1566 Phishing | Offline email subject review | **Observed themes**; malicious intent not independently verified |
+| HTML links associated with those two emails | Initial Access (context) | T1566.002 Spearphishing Link | HTML parsing: 7 + 5 links | **Observed links**; specific ATT&CK usage remains a hypothesis |
+| Shared cloud-hosting hostname | Not an adversary action on its own | No independent ATT&CK assignment | Aggregate CSV and Splunk grouping | **Confirmed correlation**, not malicious hosting |
+| Fictional training-message narrative describing an educational link | Initial Access (modeled context) | T1566.002 | Written scenario in this report | **Described only**, not sent or instrumented |
+| Local HTTP GET to `/index.html` | No proven adversary tactic | Supporting telemetry for scenario, not itself T1566.002 | Server log + Splunk SPL, HTTP 200 | **Confirmed benign page access** |
+| Filtering and reviewing the HTTP event in Splunk | Defender action (not ATT&CK adversary tactic) | Not assigned | `week6_http_detection.spl` | **Confirmed defensive analysis** |
 
-| Activity | ATT&CK association | Evidence |
+**Conclusion of mapping:** T1566.002 is an appropriate **research focus and modeled scenario**, but the laboratory does **not** demonstrate a completed real-world spearphishing attempt or compromise. See `results/week6_attack_mapping.md` for the companion evidence summary.
+
+## 10. ATT&CK Navigator visualization
+
+The Navigator layer marks **T1566.002** under **Initial Access**. Its color/comment indicates the scope of the investigation; it should not be interpreted as proof that a real adversary deployed the technique. File: `navigator/week6_attack_layer.json`.
+
+![ATT&CK Navigator layer](screenshots/03_attack_navigator.png)
+
+## 11. Results and hypothesis evaluation
+
+| Hypothesis | Result | Interpretation |
 |---|---|---|
-| Account-related urgency themes | Potential T1566 phishing context | Two redacted email samples |
-| HTML links in phishing-related emails | Candidate T1566.002 | Offline email analysis |
-| Shared hosting domain | Infrastructure correlation, not a separate ATT&CK technique | 12 observed hyperlinks |
-| Local GET /index.html | Benign link-access demonstration | HTTP status 200 in Splunk |
+| H1: samples share a hostname and potentially phishing-related lures | Supported for the **two selected samples** | Shared hostname and account-related themes observed, with no attribution |
+| H2: Splunk can identify a successful benign local page visit | Supported | One GET `/index.html` with HTTP 200 found among three ingested log events |
+| A full T1566.002 attack was reproduced | **Not established** | No delivered message-to-click evidence or adversary behavior was recorded |
 
-The local HTTP request does not by itself demonstrate
-delivery of a phishing message or adversary initial access.
+The outcome is a reproducible investigation of email link metadata plus a limited, instrumented, local HTTP demonstration.
 
-Detailed mapping:
-`results/week6_attack_mapping.md`
+## 12. Security recommendations
 
-## 11. Results and Findings
-The investigation produced:
-- Two analyzed real-world redacted email samples.
-- Twelve HTML hyperlinks across the samples.
-- One shared hostname.
-- One ATT&CK Navigator layer.
-- A controlled local HTTP demonstration.
-- Three HTTP log entries indexed in Splunk.
-- One successful HTTP request identified by SPL.
+In operational investigations, use mail-gateway and click-tracking telemetry to associate an email with a specific request; inspect sender authentication and message headers where available; correlate network and endpoint observations; and apply reputation or isolation decisions to **validated, specific indicators**, not broadly shared storage infrastructure. Consider explainable detection logic, false-positive review, and repeatable evidence retention.
 
-The results demonstrate a repeatable process for
-collecting and investigating phishing-related evidence.
+## 13. Limitations, ethics, and reproducibility
 
-## 12. Limitations
-The selected dataset is small and does not support
-general conclusions about phishing campaigns.
+The study includes only two historical redacted messages. Some metadata is deliberately removed. The training-message scenario was not delivered. The local page is harmless and no credentials were collected. The data does not establish attacker identity, user deception, malware execution, campaign prevalence, or compromise. Times are recorded as displayed in Splunk and may reflect the local timezone. A reader can reproduce the analysis using the aggregate CSV, saved SPL, local HTML plan, and screenshots, but cannot reconstruct the complete original emails from the aggregate CSV alone.
 
-The email samples are historical and redacted.
-The hosting domain is not a verified malicious IOC.
+## 14. Conclusion
 
-No phishing email was sent during the local exercise.
-No credentials were collected.
-No compromise or successful initial access was observed.
+This Week 6 work studies T1566.002 in the context of phishing infrastructure research, measures hyperlink metadata across two redacted email samples, correlates their hostname in Splunk, and identifies one benign local HTTP request using SPL. The separation between **observed artifacts**, **modeled technique context**, and **confirmed system events** is essential for accurate ATT&CK mapping. Further instrumented, authorized testing would be required to demonstrate the complete technique.
 
-The local HTTP activity is not a complete simulation
-of an adversary executing T1566.002.
+## 15. References
 
-## 13. Conclusion
-This weekly increment applied MITRE ATT&CK to a
-phishing infrastructure research topic.
+1. MITRE ATT&CK, [T1566.002 — Spearphishing Link](https://attack.mitre.org/techniques/T1566/002/).
+2. MITRE ATT&CK, [T1566 — Phishing](https://attack.mitre.org/techniques/T1566/).
+3. MITRE, [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/).
+4. `cw-l`, [email-corpus](https://github.com/cw-l/email-corpus).
 
-Redacted real-world emails provided phishing-related
-observations, while Splunk supported correlation and
-investigation of recorded events.
-
-The work also demonstrated the distinction between
-potential ATT&CK mappings and confirmed attack activity.
-
-## 14. References
-- MITRE ATT&CK T1566.002:
-  https://attack.mitre.org/techniques/T1566/002/
-- MITRE ATT&CK T1566:
-  https://attack.mitre.org/techniques/T1566/
-- ATT&CK Navigator:
-  https://mitre-attack.github.io/attack-navigator/
-- Email corpus:
-  https://github.com/cw-l/email-corpus
