@@ -30,7 +30,7 @@ A common phishing-link scenario involves an account-security or service-interrup
 
 **Source:** [cw-l/email-corpus](https://github.com/cw-l/email-corpus), a corpus of redacted email samples intended for security research and education. Two `.eml` samples were inspected offline. Their routing details or contributor identifiers may be removed, and defanged links must not be treated as verified live indicators.
 
-The analyst used Python email/HTML parsing to review headers and count hyperlink attributes, compare hostnames, inspect fragment/query presence, and create an aggregate CSV. No links from these samples were opened. The CSV is derived analysis data; it is **not** the original email evidence. The underlying email content and the exact original full link paths are not included in this repository.
+The analyst used Python email/HTML parsing to review headers and count hyperlink attributes, compare hostnames, inspect fragment/query presence, and create an aggregate CSV. A **separate reproducibility script** is now supplied as `scripts/analyze_eml.py` for independent re-analysis; it is not the historical script used to produce the original counts, and no rerun on the original two samples is claimed. No links from these samples were opened. The CSV is derived analysis data; it is **not** the original email evidence. The underlying email content and the exact original full link paths are not included in this repository. For a reproducibility check, obtain the public redacted source samples independently and run the supplied script on the same two files; because the two original sample filenames are not pinned in this repository, exact replication of the published sample counts cannot yet be guaranteed.
 
 ## 5. Observations from two email samples
 
@@ -61,18 +61,20 @@ index=phishing_week6 email_id=*
 
 ![Domain correlation](screenshots/02_domain_correlation.png)
 
-## 7. Controlled simulation design: where the ATT&CK behavior is represented
+## 7. Controlled simulation design and validation status
 
 **Scope:** a non-delivered, fictional training-message description and a **local-only** demonstration of a benign page visit. No impersonation of a real organization, third-party link, credential form, or outbound message is used.
 
 The training narrative describes a fictional recipient encountering a routine account-notice message with a link to an explicitly labeled *educational* page hosted on `127.0.0.1`. The narrative provides context for the **link-in-message** component of T1566.002. This step is a *scenario description*, not a delivered phishing email; it was **not** monitored as email delivery telemetry.
 
-The actual lab action was a browser request to an educational `index.html` served on `127.0.0.1:8088`. The page stated that it was a local lab and collected no credentials. The server logged `GET /index.html HTTP/1.1` with status **200**, along with two 404-related log lines (one for a missing favicon). A **GET 200** confirms retrieval of the local page, not a successful phishing attempt.
+An optional **explicitly labeled, local training-message mock-up** is supplied as `simulation/training_message.html`. It contains only a localhost link to the existing educational page; it is not an actual phishing email and must not be sent to recipients. To evaluate the message-to-click sequence, a student may open this mock-up locally, click the link while the local server is running, and capture a NEW corresponding server log with a unique timestamp. **This additional validation has not yet been performed or verified**. It must not be reported as observed evidence until screenshots and log lines have been collected.
+
+The actual lab action already performed was a browser request to an educational `index.html` served on `127.0.0.1:8088`. The page stated that it was a local lab and collected no credentials. The server logged `GET /index.html HTTP/1.1` with status **200**, along with two 404-related log lines (one for a missing favicon). A **GET 200** confirms retrieval of the local page, not a successful phishing attempt.
 
 ![Local simulation page](screenshots/04_local_simulation.png)
 ![Local HTTP server log](screenshots/05_http_server_log.png)
 
-The test plan and HTML source are preserved under `simulation/`.
+The test plan and original HTML source are preserved under `simulation/`. The added `simulation/training_message.html` is a proposed educational extension only. See `simulation/validation_steps.md` for evidence collection without misrepresenting the prior HTTP log.
 
 ## 8. Splunk detection and investigation
 
@@ -108,7 +110,7 @@ index=phishing_week6 sourcetype=week6_http_log
 | Account-restriction and suspension pretexts in two redacted emails | Initial Access (context) | T1566 Phishing | Offline email subject review | **Observed themes**; malicious intent not independently verified |
 | HTML links associated with those two emails | Initial Access (context) | T1566.002 Spearphishing Link | HTML parsing: 7 + 5 links | **Observed links**; specific ATT&CK usage remains a hypothesis |
 | Shared cloud-hosting hostname | Not an adversary action on its own | No independent ATT&CK assignment | Aggregate CSV and Splunk grouping | **Confirmed correlation**, not malicious hosting |
-| Fictional training-message narrative describing an educational link | Initial Access (modeled context) | T1566.002 | Written scenario in this report | **Described only**, not sent or instrumented |
+| Fictional training-message narrative and new localhost-only HTML mock-up | Initial Access (modeled context) | T1566.002 | `simulation/training_message.html` and validation plan | **Artifact prepared**, message-to-click test not yet verified |
 | Local HTTP GET to `/index.html` | No proven adversary tactic | Supporting telemetry for scenario, not itself T1566.002 | Server log + Splunk SPL, HTTP 200 | **Confirmed benign page access** |
 | Filtering and reviewing the HTTP event in Splunk | Defender action (not ATT&CK adversary tactic) | Not assigned | `week6_http_detection.spl` | **Confirmed defensive analysis** |
 
@@ -128,7 +130,7 @@ The Navigator layer marks **T1566.002** under **Initial Access**. Its color/comm
 | H2: Splunk can identify a successful benign local page visit | Supported | One GET `/index.html` with HTTP 200 found among three ingested log events |
 | A full T1566.002 attack was reproduced | **Not established** | No delivered message-to-click evidence or adversary behavior was recorded |
 
-The outcome is a reproducible investigation of email link metadata plus a limited, instrumented, local HTTP demonstration.
+The outcome is a documented investigation of email link metadata plus a limited, instrumented, local HTTP demonstration. The new offline analysis script improves repeatability but has **not yet been independently validated against the original selected pair**. The mock-up represents an optional follow-up test, not completed evidence.
 
 ## 12. Security recommendations
 
@@ -136,11 +138,21 @@ In operational investigations, use mail-gateway and click-tracking telemetry to 
 
 ## 13. Limitations, ethics, and reproducibility
 
-The study includes only two historical redacted messages. Some metadata is deliberately removed. The training-message scenario was not delivered. The local page is harmless and no credentials were collected. The data does not establish attacker identity, user deception, malware execution, campaign prevalence, or compromise. Times are recorded as displayed in Splunk and may reflect the local timezone. A reader can reproduce the analysis using the aggregate CSV, saved SPL, local HTML plan, and screenshots, but cannot reconstruct the complete original emails from the aggregate CSV alone.
+The study includes only two historical redacted messages. Some metadata is deliberately removed. The training-message scenario was not delivered. The local page is harmless and no credentials were collected. The data does not establish attacker identity, user deception, malware execution, campaign prevalence, or compromise. Times are recorded as displayed in Splunk and may reflect the local timezone. A reader can reproduce the Splunk aggregation using the aggregate CSV, and can rerun the local HTTP demo using the saved SPL, HTML files, and instructions. The provided `scripts/analyze_eml.py` can recompute safe counts from independently obtained `.eml` files but was not the original analysis script and has not been validated on the exact historic sample pair. The original sample identifiers are not recorded here; thus exact independent reproduction of the email counts remains limited.
+
+### Reproducibility command (offline only)
+
+Run this only on locally stored, redacted `.eml` files for which analysis is authorized. The command **does not contact any URL**:
+
+```bash
+python3 scripts/analyze_eml.py /path/to/sample1.eml /path/to/sample2.eml --output /tmp/week6_recomputed.csv
+```
+
+The two rows produced should be reviewed before comparing them to `data/week6_email_analysis.csv`; differences may arise from MIME structure, encoding, or sample selection. No original message content, sender address, or full hyperlink is written to the output.
 
 ## 14. Conclusion
 
-This Week 6 work studies T1566.002 in the context of phishing infrastructure research, measures hyperlink metadata across two redacted email samples, correlates their hostname in Splunk, and identifies one benign local HTTP request using SPL. The separation between **observed artifacts**, **modeled technique context**, and **confirmed system events** is essential for accurate ATT&CK mapping. Further instrumented, authorized testing would be required to demonstrate the complete technique.
+This Week 6 work studies T1566.002 in the context of phishing infrastructure research, measures hyperlink metadata across two redacted email samples, correlates their hostname in Splunk, and identifies one benign local HTTP request using SPL. The separation between **observed artifacts**, **modeled technique context**, and **confirmed system events** is essential for accurate ATT&CK mapping. The labeled local-message mock-up can support a future message-to-click classroom validation, but no new activity is assumed. Further instrumented, authorized testing would be required to demonstrate more of the technique.
 
 ## 15. References
 
