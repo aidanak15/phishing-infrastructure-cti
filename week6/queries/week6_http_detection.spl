@@ -1,0 +1,4 @@
+index=phishing_week6 sourcetype=week6_http_log
+| rex field=_raw "\"(?<http_method>GET|POST) (?<url_path>[^ ]+) HTTP/[^\"]+\" (?<http_status>\d{3})"
+| search http_method="GET" url_path="/index.html" http_status="200"
+| table _time http_method url_path http_status source
