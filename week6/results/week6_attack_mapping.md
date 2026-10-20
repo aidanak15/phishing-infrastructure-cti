@@ -22,3 +22,18 @@
 ## Investigation caveats
 
 A shared hostname and message pretexts are not sufficient to identify an adversary or malicious service. HTTP 200 is not proof of an email-click journey, and no delivery or credential evidence was produced. A complete evaluation would require correlated mail and network records obtained in an authorized environment.
+
+## Validated Local Training Demonstration
+
+| Activity | ATT&CK Tactic | Technique | Evidence | Status |
+|---|---|---|---|---|
+| Educational message containing a localhost link | Initial Access (scenario context) | T1566.002 | training_message.html | Prepared |
+| Local page navigation during training | Initial Access (scenario context) | T1566.002 | training_http_server.log | Observed in laboratory |
+| HTTP GET /index.html, status 200 | Not independently attributable to an ATT&CK tactic | N/A | Splunk HTTP event at 23:35:15 | Confirmed |
+| Splunk investigation of HTTP logs | Defensive activity | N/A | 09_training_detection.png | Confirmed |
+
+The demonstration is a benign educational approximation
+of a link-based phishing scenario.
+
+The HTTP events confirm local web activity, not malicious
+intent, phishing delivery, credential theft, or compromise.

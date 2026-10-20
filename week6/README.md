@@ -161,3 +161,61 @@ This Week 6 work studies T1566.002 in the context of phishing infrastructure res
 3. MITRE, [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/).
 4. `cw-l`, [email-corpus](https://github.com/cw-l/email-corpus).
 
+
+## 16. Validated Local Training Link Demonstration
+
+### Objective
+Validate a controlled educational link-navigation scenario
+associated with MITRE ATT&CK T1566.002.
+
+### Laboratory Setup
+- Environment: macOS and Python HTTP Server
+- Local address: 127.0.0.1:8088
+- Training message: simulation/training_message.html
+- Destination: simulation/index.html
+- SIEM: Splunk Enterprise
+- Index: phishing_week6
+- Sourcetype: week6_http_logs
+
+### Procedure
+1. Hosted a harmless educational HTML page locally.
+2. Opened a training message containing a localhost link.
+3. Followed the link in a browser.
+4. Collected local HTTP server logs.
+5. Imported the logs into Splunk.
+6. Investigated the resulting HTTP events using SPL.
+
+### Observed Results
+
+| Time | HTTP Method | Path | Status |
+|---|---|---|---|
+| 23:33:45 | GET | /index.html | 304 |
+| 23:35:15 | GET | /index.html | 200 |
+
+Date: October 20, 2026.
+
+Splunk indexed two events from training_http_server.log.
+An SPL query identified one successful GET request
+to /index.html with HTTP status 200.
+
+### Evidence
+
+![Training HTTP log](screenshots/08_training_link_visit.png)
+
+![Splunk training detection](screenshots/09_training_detection.png)
+
+### ATT&CK Interpretation
+- Tactic: Initial Access
+- Technique: T1566 — Phishing
+- Sub-technique: T1566.002 — Spearphishing Link
+
+The training message and local navigation demonstrate
+a limited educational approximation of link-based
+initial-access scenarios.
+
+The HTTP log confirms the page request, but does not
+independently establish the referring document.
+
+This exercise did not involve real phishing delivery,
+credential collection, malicious infrastructure,
+or successful compromise.
