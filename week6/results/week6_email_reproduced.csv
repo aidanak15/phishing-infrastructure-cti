@@ -1,0 +1,3 @@
+email_id,source_type,domain,html_links,unique_url_count,fragment_links,query_links,attack_technique
+0f7258a58a16,real_redacted_email,storage[.]googleapis[.]com,7,7,7,0,T1566.002 (candidate)
+b834078e3411,real_redacted_email,storage[.]googleapis[.]com,5,5,5,0,T1566.002 (candidate)

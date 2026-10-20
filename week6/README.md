@@ -219,3 +219,36 @@ independently establish the referring document.
 This exercise did not involve real phishing delivery,
 credential collection, malicious infrastructure,
 or successful compromise.
+
+## 17. Reproducibility Validation
+
+The offline email analysis was reproduced using
+the Python script `scripts/analyze_eml.py`.
+
+Two original redacted `.eml` files from the
+cw-l/email-corpus dataset were processed locally.
+
+The script produced:
+`results/week6_email_reproduced.csv`
+
+### Reproduced Results
+
+| Metric | Email 1 | Email 2 |
+|---|---:|---:|
+| HTML hyperlinks | 7 | 5 |
+| Unique URL values | 7 | 5 |
+| URLs with fragments | 7 | 5 |
+| URLs with query parameters | 0 | 0 |
+
+Both samples referenced the defanged hostname
+`storage[.]googleapis[.]com`.
+
+The reproduced counts match the previously documented
+results in `data/week6_email_analysis.csv`.
+
+This verifies the repeatability of the selected
+email metadata analysis. It does not establish
+that the shared hostname is malicious or that
+the emails originated from the same attacker.
+
+No URLs were opened during the offline analysis.
