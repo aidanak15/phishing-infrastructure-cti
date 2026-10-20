@@ -1,0 +1,14 @@
+(
+  source="car_whoami_splunk.json"
+  OR source="car_net_splunk.json"
+)
+event_id=1
+| where match(lower(process_name), "^(whoami|hostname|systeminfo|ipconfig|net)\.exe$")
+| eval original_timestamp='@timestamp'
+| eval detection_reason=case(
+    lower(process_name)="whoami.exe", "User account discovery",
+    lower(process_name)="net.exe", "Windows command requiring context",
+    true(), "Host discovery candidate"
+  )
+| table original_timestamp host_name user_name process_name process_command_line process_parent_name detection_reason
+| sort original_timestamp

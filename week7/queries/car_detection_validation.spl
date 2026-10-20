@@ -1,0 +1,12 @@
+(
+  source="car_whoami_splunk.json"
+  OR source="car_net_splunk.json"
+)
+event_id=1
+| eval matched=if(
+    match(lower(process_name), "^(whoami|hostname|systeminfo|ipconfig|net)\.exe$"),
+    "Matched",
+    "Not matched"
+  )
+| stats count by process_name process_parent_name matched
+| sort process_name
