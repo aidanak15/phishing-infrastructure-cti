@@ -37,3 +37,63 @@ of a link-based phishing scenario.
 
 The HTTP events confirm local web activity, not malicious
 intent, phishing delivery, credential theft, or compromise.
+
+## Final Evidence Reconciliation
+
+### Reproduced Email Metadata Analysis
+
+The two selected redacted email samples were analyzed again
+using scripts/analyze_eml.py.
+
+The reproduced results matched the documented counts:
+
+| Metric | Email 1 | Email 2 |
+|---|---:|---:|
+| HTML hyperlinks | 7 | 5 |
+| Unique URL values | 7 | 5 |
+| URLs with fragments | 7 | 5 |
+| URLs with query parameters | 0 | 0 |
+
+The reproduced results are recorded in
+results/week6_email_reproduced.csv.
+
+This confirms repeatability for the selected samples,
+but does not establish malicious intent or common attribution.
+
+### Controlled Local Navigation Evidence
+
+A benign training-message demonstration was performed locally.
+
+The HTTP server recorded:
+
+| Method | Path | Status |
+|---|---|---|
+| GET | /index.html | 304 |
+| GET | /index.html | 200 |
+
+Splunk identified one successful GET request with HTTP 200.
+
+Evidence:
+- screenshots/08_training_link_visit.png
+- screenshots/09_training_detection.png
+- results/training_http_server.log
+
+The HTTP logs demonstrate local page access.
+They do not independently prove the referring document,
+real phishing delivery, credential theft, or compromise.
+
+### Final ATT&CK Assessment
+
+- Tactic: Initial Access
+- Technique: T1566 — Phishing
+- Sub-technique: T1566.002 — Spearphishing Link
+
+T1566.002 describes the technique investigated and
+represented by the educational scenario.
+
+The observed network evidence confirms a benign local
+page request, not an actual adversary intrusion.
+
+Therefore, the activity should be classified as a
+controlled, partial educational demonstration rather
+than a confirmed real-world phishing attack.
