@@ -241,3 +241,50 @@ The queries are limited to the selected published events and can be reproduced b
 The original `@timestamp` field should be used to interpret event chronology.
 
 The evaluation demonstrates rule functionality on two positive examples, not production detection accuracy.
+
+## 18. Comparison with the Original MITRE CAR Analytic
+
+The implemented SPL rule was compared against the official
+CAR-2016-03-001 Host Discovery Commands analytic.
+
+| Feature | Official CAR | Implemented SPL |
+|---|---|---|
+| Data source | Process creation | Sysmon Event ID 1 |
+| Command coverage | Multiple built-in Windows discovery commands | Five selected command names |
+| Command-line filtering | Special handling for sc query/qc | Not implemented |
+| Parent process context | Recommended for investigation | Included in output |
+| Allowlisting and anomaly analysis | Recommended for tuning | Not implemented |
+| Evaluation dataset | General analytic definition | Two published examples |
+
+### Implementation Differences
+
+The original MITRE CAR analytic includes commands such as
+quser, qwinsta, tasklist, and sc with selected arguments.
+
+The implemented SPL rule does not cover these commands.
+
+The current rule matches selected process names and does
+not use parent-process conditions to determine whether
+a command execution is suspicious.
+
+### Validation Scope
+
+The implementation matched both selected published events:
+- whoami.exe
+- net.exe start
+
+This demonstrates basic functionality on two positive
+examples. It does not establish detection accuracy,
+precision, recall, or production readiness.
+
+### Future Improvements
+
+- Extend command coverage to match the official analytic.
+- Add command-line conditions where appropriate.
+- Incorporate parent-process context into investigations.
+- Test against independent benign and malicious records.
+- Evaluate false positives and false negatives.
+- Introduce environment-specific tuning.
+
+Official reference:
+https://car.mitre.org/analytics/CAR-2016-03-001/
