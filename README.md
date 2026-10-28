@@ -1,65 +1,48 @@
-# Project Overview
+# Week 8 — Creating a Plan to Emulate an Attacker's Action
 
-## Cyber Threat Intelligence Analysis of Phishing Infrastructure
+**Project:** Cyber Threat Intelligence Analysis of Phishing Infrastructure  
+**Deliverable:** ATT&CK-aligned adversary emulation plan (documentation only)  
+**Status:** Planned; no Week 8 operation has been run or validated.
 
-**Topic:** Analysis of phishing infrastructure using Cyber Threat Intelligence (CTI), OSINT sources, and indicator processing techniques.
+## Objective
 
-This project focuses on analyzing phishing-related infrastructure using publicly available threat intelligence and OSINT sources.
+Develop a controlled, four-step scenario covering the three required phases: **Initial Access → Persistence → Data Exfiltration**. A **Collection** step is included to explain what would be transferred. The objective is to define observable telemetry and defensive tests, not to compromise a device.
 
-The work for Assignment 1 covers Weeks 1–3 of the course syllabus. Each week is stored in a separate folder and applies the weekly tasks directly to the selected project topic.
+## Relationship to previous weeks
 
-## What Was Produced
+- **Week 5:** Splunk searches involving DNS and proxy event datasets (`phishing_logs`). The prior dataset is not proof that Week 8 behavior was executed.
+- **Week 6:** An authorized training-link visit was captured as HTTP evidence and mapped *partially* to T1566.002. There was no demonstrated phishing email or endpoint compromise.
+- **Week 7:** MITRE CAR mapping and analysis using a public host-discovery JSON example. The sample is separate from Week 6 HTTP evidence.
 
-| Week | Folder / File | What it covers |
-| --- | --- | --- |
-| 1 | `week1/report.md` | CTI fundamentals applied to phishing infrastructure: key terminology, phishing threat classification, indicators of compromise, and relevant threat intelligence sources. |
-| 2 | `week2/report.md` | Data collection process: open and closed sources, OSINT platforms, and data-source mapping for phishing investigations. |
-| 3 | `week3/report.md` + `raw_iocs.csv` + `normalized_iocs.csv` + `scripts/normalize_iocs.py` | Processing and exploitation of phishing indicators: filtering, normalization, deduplication, and preparation of IOC data for further analysis. |
+## Documents
 
-## Project Scope
+| File | Purpose |
+|---|---|
+| [adversary_emulation_plan.md](adversary_emulation_plan.md) | Main scenario, rules, stages, success checks and limits |
+| [attack_mapping.md](attack_mapping.md) | ATT&CK IDs, interpretation and telemetry |
+| [detection_strategy.md](detection_strategy.md) | Planned Splunk validation and illustrative SPL |
+| [caldera_profile.md](caldera_profile.md) | Conceptual CALDERA objects; not executable abilities |
+| [attack_flow.md](attack_flow.md) | Mermaid diagram of the scenario |
 
-The project focuses on phishing-related indicators such as:
+## Overview
 
-- malicious URLs;
-- suspicious domains;
-- IP addresses;
-- domain registration data;
-- reputation information;
-- relationships between indicators.
+| Phase | ATT&CK ID | Stage status |
+|---|---|---|
+| Initial Access | T1566.002 — Spearphishing Link | Prior Week 6 link-navigation observation only |
+| Persistence | T1053.003 — Scheduled Task/Job: Cron | Planned, not executed |
+| Collection | T1005 — Data from Local System | Planned with fictional test data |
+| Exfiltration | T1048.003 — Exfiltration Over Unencrypted Non-C2 Protocol | Planned, not executed |
 
-The goal is to build a simple CTI workflow that transforms raw phishing intelligence into structured and usable threat data.
+**Operating-system assumption:** the hypothetical persistence host is a separately authorized Linux VM or macOS test machine, because `cron` is not a Windows Scheduled Task. The earlier training webpage and HTTP records do not establish which endpoint was compromised.
 
-## Weekly Workflow
+## Scope
 
-- **Week 1 — Cyber Threat Intelligence Fundamentals:** define CTI concepts, classify phishing threats, and identify relevant indicators.
-- **Week 2 — Data Collection Process:** identify and compare data sources used for phishing investigation.
-- **Week 3 — Data Processing and Exploitation:** clean, normalize, deduplicate, and organize collected indicators.
+Only an isolated lab with owner authorization, fictional markers, and reviewed non-destructive behavior. No real phishing, malware, stolen credentials, third-party data, public uploads or deployed persistent access. All tasks remain proposals unless separately verified.
 
-## Data Sources
+## References
 
-The project uses or evaluates sources such as:
-
-- VirusTotal
-- PhishTank
-- URLhaus
-- AlienVault OTX
-- AbuseIPDB
-- WHOIS
-- crt.sh
-- MISP
-
-## Expected Outcome
-
-By the end of Weeks 1–3, the project should provide a basic phishing threat intelligence workflow for:
-
-1. collecting phishing-related indicators;
-2. organizing indicators by type and source;
-3. processing and normalizing the data;
-4. removing duplicates;
-5. preparing the data for further analysis and correlation.
-
-## AI Usage Disclosure
-
-AI tools were used only as a supporting assistant for structuring documentation, improving explanations, and helping with Markdown formatting.
-
-The project topic, selected sources, analysis process, and conclusions remain the responsibility of the project authors.
+- [MITRE ATT&CK T1566.002](https://attack.mitre.org/techniques/T1566/002/)
+- [MITRE ATT&CK T1053.003](https://attack.mitre.org/techniques/T1053/003/)
+- [MITRE ATT&CK T1005](https://attack.mitre.org/techniques/T1005/)
+- [MITRE ATT&CK T1048.003](https://attack.mitre.org/techniques/T1048/003/)
+- [MITRE CALDERA](https://caldera.readthedocs.io/en/stable/)
