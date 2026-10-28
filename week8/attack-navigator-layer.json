@@ -1,0 +1,23 @@
+{
+  "name": "Week 8 — Phishing Infrastructure CTI (planned scope)",
+  "versions": {"layer": "4.5"},
+  "domain": "enterprise-attack",
+  "description": "Conceptual ATT&CK mapping only. Week 6 training-link HTTP observation provides partial evidence for T1566.002; remaining Week 8 stages are planned. Colors describe stage classification, NOT detection success.",
+  "sorting": 0,
+  "hideDisabled": false,
+  "techniques": [
+    {"techniqueID": "T1583.001", "comment": "Infrastructure context only; domain acquisition not performed", "score": 0},
+    {"techniqueID": "T1608.005", "comment": "Link target context only; not demonstrated as adversary staging", "score": 0},
+    {"techniqueID": "T1566.002", "comment": "Partial Week 6 browser/HTTP training-link observation; no email delivery or compromise", "score": 1},
+    {"techniqueID": "T1053.003", "comment": "Planned Linux/macOS Cron persistence stage; not executed", "score": 0},
+    {"techniqueID": "T1005", "comment": "Planned collection of fictional test data; not executed", "score": 0},
+    {"techniqueID": "T1048.003", "comment": "Planned unencrypted non-C2 lab transfer; not executed", "score": 0}
+  ],
+  "gradient": {"colors": ["#d3d3d3", "#7ca5cf"], "minValue": 0, "maxValue": 1},
+  "legendItems": [
+    {"label": "0 = Context or planned only", "color": "#d3d3d3"},
+    {"label": "1 = Partial prior training-link observation (not full detection)", "color": "#7ca5cf"}
+  ],
+  "showTacticRowBackground": false,
+  "selectTechniquesAcrossTactics": true
+}
