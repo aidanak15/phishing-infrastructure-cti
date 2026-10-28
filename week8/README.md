@@ -33,6 +33,19 @@ Develop a controlled, four-step scenario covering the three required phases: **I
 | Collection | T1005 — Data from Local System | Planned with fictional test data |
 | Exfiltration | T1048.003 — Exfiltration Over Unencrypted Non-C2 Protocol | Planned, not executed |
 
+## MITRE ATT&CK Navigator Visualization
+
+![Week 8 ATT&CK Navigator](week8/attack_navigator.svg)
+
+**Figure 1.** MITRE ATT&CK Navigator layer showing the
+selected techniques for the Week 8 phishing infrastructure
+adversary emulation plan.
+
+The highlighted techniques represent the planned attack
+stages. Only T1566.002 has partial supporting evidence
+from Week 6; the remaining stages have not been executed.
+
+
 **Operating-system assumption:** the hypothetical persistence host is a separately authorized Linux VM or macOS test machine, because `cron` is not a Windows Scheduled Task. The earlier training webpage and HTTP records do not establish which endpoint was compromised.
 
 ## Scope
@@ -46,3 +59,5 @@ Only an isolated lab with owner authorization, fictional markers, and reviewed n
 - [MITRE ATT&CK T1005](https://attack.mitre.org/techniques/T1005/)
 - [MITRE ATT&CK T1048.003](https://attack.mitre.org/techniques/T1048/003/)
 - [MITRE CALDERA](https://caldera.readthedocs.io/en/stable/)
+
+
