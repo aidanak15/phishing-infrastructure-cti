@@ -35,8 +35,7 @@ Develop a controlled, four-step scenario covering the three required phases: **I
 
 ## MITRE ATT&CK Navigator Visualization
 
-![Week 8 ATT&CK Navigator](week8/Week_8__Phishing_Infrastructure_CTI_planned_scope (3).svg)
-
+![Week 8 ATT&CK Navigator](<Week_8__Phishing_Infrastructure_CTI_planned_scope (3).svg>)
 **Figure 1.** MITRE ATT&CK Navigator layer showing the
 selected techniques for the Week 8 phishing infrastructure
 adversary emulation plan.
