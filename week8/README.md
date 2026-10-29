@@ -4,8 +4,6 @@
 **Assignment:** Creating a Plan to Emulate an Attacker's Action  
 **Deliverable:** Documented plan and MITRE ATT&CK mapping; **no Week 8 attack emulation executed**.  
 
-> **For the defense:** This is a single-page report. Use the table of contents below to jump between the plan, ATT&CK table, attack diagram, Splunk searches, detection gaps, and CALDERA profile. The original sections have been consolidated here.
-
 ## At a glance
 
 | Stage | ATT&CK technique | Actual status |
