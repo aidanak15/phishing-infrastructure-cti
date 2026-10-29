@@ -470,7 +470,8 @@ Do not describe this conceptual CALDERA section as an exported YAML or operation
 
 ## ATT&CK Navigator Visualization
 
-![Week 8 — MITRE ATT&CK Navigator](week8_attack_navigator.svg)
+![Week 8 — MITRE ATT&CK Navigator](Week_8__Phishing_Infrastructure_CTI_planned_scope.svg)
+
 
 *Figure 1. ATT&CK Navigator layer for the proposed Week 8 scenario. Colors identify selected stages and their documented scope; they are not evidence of successful execution or detection.*
 
