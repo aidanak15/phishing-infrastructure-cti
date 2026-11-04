@@ -84,7 +84,7 @@ Both tests were performed manually using safe adaptations of official Atomic Red
 | Selected events forwarded to Splunk | 3 |
 | Selected events visible in Splunk | 3 |
 | Telemetry visibility for selected tests | 2/2 |
-| Automated alerts verified | 0 |
+| Automated alerts verified | 1 (synthetic validation event) |
 
 **Interpretation:** Both selected test procedures produced observable telemetry in the configured laboratory environment. This does not establish a general threat detection rate.
 
@@ -92,8 +92,7 @@ Both tests were performed manually using safe adaptations of official Atomic Red
 
 The experiments were performed in an educational virtual machine. The test procedures were adapted to avoid harmful actions. Selected audit events were manually extracted, sanitized, and forwarded to Splunk.
 
-Only process execution visibility was validated. No complete phishing campaign, credential dumping activity, automated threat alert, or production security control was tested.
-
+Process execution telemetry and manual ingestion of selected Auditd events were validated. One scheduled Splunk alert was successfully triggered using a separate synthetic validation event. Continuous automatic log forwarding and alert detection based on a newly forwarded real Auditd event were not validated. No complete phishing campaign, credential dumping activity, or production security control was tested.
 ## 7. Conclusion
 
 Both selected Atomic Red Team procedures were successfully executed and analyzed. Linux Audit recorded relevant process execution activity, and Splunk received three selected events.
