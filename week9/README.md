@@ -27,7 +27,7 @@ For Week 9, we performed two safe, adapted Atomic Red Team tests in an isolated 
 | Architecture | x86_64 |
 | Test reference | Atomic Red Team YAML definitions (manually adapted; no Invoke-AtomicRedTeam runner used) |
 | Logging | Linux Audit (auditd) |
-| SIEM | Splunk Enterprise (installed version: to be verified in Splunk Web) |
+| SIEM | Splunk Enterprise 10.6.0.5 (build `86587d4e3b27`), Docker container `splunk-week5` |
 | Containerization | Docker |
 | Data Transfer | HTTP Event Collector (HEC) |
 | Splunk Index | `atomic_week9` |
