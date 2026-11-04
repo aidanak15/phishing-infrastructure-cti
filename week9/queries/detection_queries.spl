@@ -1,0 +1,25 @@
+
+# Week 9 — Atomic Red Team Detection Queries
+# Project: Cyber Threat Intelligence Analysis of Phishing Infrastructure
+
+# Query 1 — View all Atomic Test events
+index=atomic_week9 sourcetype="week9:atomic"
+| table _time host technique test event_type command audit_id status
+
+# Query 2 — Detect T1059.004: Unix Shell
+index=atomic_week9 sourcetype="week9:atomic"
+event_type="EXECVE" command="sh" script="art.sh"
+| table _time host technique command script audit_id status
+
+# Query 3 — Detect T1082: System Information Discovery
+index=atomic_week9 sourcetype="week9:atomic" technique="T1082"
+| table _time host technique test event_type command audit_id status
+
+# Query 4 — Detection Summary
+index=atomic_week9 sourcetype="week9:atomic"
+| stats count AS events values(command) AS commands values(status) AS status BY technique test
+| sort technique
+
+# Query 5 — Linux Audit Telemetry
+index=atomic_week9 sourcetype="week9:audit"
+| table _time host event_type command audit_id
