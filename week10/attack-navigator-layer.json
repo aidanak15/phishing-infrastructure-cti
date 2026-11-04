@@ -1,0 +1,138 @@
+{
+  "name": "Week 10 — APT29 selected TTPs (G0016)",
+  "versions": {
+    "attack": "18",
+    "navigator": "5.1.0",
+    "layer": "4.5"
+  },
+  "domain": "enterprise-attack",
+  "description": "Selected publicly documented APT29 techniques for phishing-infrastructure CTI analysis. This is an analytical mapping, not a record of test execution.",
+  "sorting": 0,
+  "layout": {
+    "layout": "side",
+    "aggregateFunction": "average",
+    "showID": true,
+    "showName": true,
+    "showAggregateScores": false,
+    "countUnscored": false
+  },
+  "hideDisabled": false,
+  "techniques": [
+    {
+      "techniqueID": "T1584.001",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1587.001",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1566.001",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1566.002",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1204.002",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1059.001",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1546.003",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1547.001",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1136.003",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1548.002",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1110.003",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1003.002",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1003.004",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1003.006",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1560.001",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1090.004",
+      "score": 1,
+      "comment": "Public-source APT29 technique mapping; not emulated in Week 10.",
+      "enabled": true
+    }
+  ],
+  "gradient": {
+    "colors": [
+      "#ffffff",
+      "#d7e9f6",
+      "#3479a9"
+    ],
+    "minValue": 0,
+    "maxValue": 1
+  },
+  "legendItems": [
+    {
+      "label": "APT29 public-source selection (not tested)",
+      "color": "#3479a9"
+    }
+  ],
+  "showTacticRowBackground": false,
+  "tacticRowBackground": "#dddddd",
+  "selectTechniquesAcrossTactics": true,
+  "selectSubtechniquesWithParent": false,
+  "selectVisibleTechniques": false
+}
