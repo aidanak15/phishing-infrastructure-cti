@@ -160,6 +160,66 @@ The following screenshots document the execution of the adapted Atomic Red Team 
 
 Both selected tests generated observable process execution telemetry. The results confirm successful event collection and manual SPL validation, not automated threat alerts.
 
+## Automated Detection Alert Validation
+
+An additional scheduled alert was configured in Splunk Enterprise to monitor Unix shell execution events.
+
+**Alert configuration:**
+
+- Alert name: Week9 - Unix Shell Execution Detection
+- Search index: `atomic_week9`
+- Sourcetype: `week9:audit`
+- Detection condition: `command="/bin/sh"`
+- Schedule: Every 5 minutes
+- Search window: Last 10 minutes
+- Trigger condition: Number of Results greater than 0
+- Action: Add to Triggered Alerts
+- Severity: Medium
+
+A synthetic validation event was submitted through Splunk HEC to test the alert.
+
+**Observed results:**
+
+- The validation event was successfully indexed.
+- The scheduled search matched one event.
+- Splunk recorded one automatic alert trigger on November 4, 2026, at 07:10 UTC.
+- The matching event was visible through the View Results page.
+
+**Conclusion:** The experiment successfully validated an automated Splunk alert using controlled test telemetry. This demonstrates rule execution and alert generation, but does not establish the ability to detect real phishing attacks.
+
+### Alert Evidence
+
+![Triggered Alert](screenshots/09_splunk_alert_triggered.png)
+
+![Alert Results](screenshots/10_splunk_alert_results.png)
+
+## Additional MITRE ATT&CK Analysis — T1003
+
+**Technique:** T1003 — OS Credential Dumping  
+**Tactic:** Credential Access  
+**Analysis type:** Theoretical (not executed)
+
+T1003 describes techniques used to obtain credential-related information from operating systems.
+
+This activity may occur after an attacker gains initial access through phishing and attempts to expand access within an organization's environment.
+
+### Potential Detection Indicators
+
+- Unusual access to credential-related operating system resources.
+- Suspicious process activity involving sensitive authentication components.
+- Unexpected access attempts by unauthorized accounts.
+- Security monitoring alerts related to credential access.
+
+### Monitoring Recommendations
+
+Organizations should collect relevant operating system security logs, monitor access to sensitive resources, apply least-privilege access controls, and investigate suspicious credential-related activity.
+
+### Experiment Scope
+
+T1003 was reviewed theoretically. No credential dumping commands were executed, and no passwords, hashes, or authentication secrets were collected.
+
+The practical experiments remained focused on T1059.004 and T1082.
+
 ## 10. Conclusion
 
 Week 9 demonstrated how Atomic Red Team procedures can support security monitoring validation.

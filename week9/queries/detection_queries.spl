@@ -23,3 +23,11 @@ index=atomic_week9 sourcetype="week9:atomic"
 # Query 5 — Linux Audit Telemetry
 index=atomic_week9 sourcetype="week9:audit"
 | table _time host event_type command audit_id
+
+# Query 6 — Automated Unix Shell Execution Alert
+# Scheduled every 5 minutes, searches the last 10 minutes
+# Trigger condition: Number of Results > 0
+
+index=atomic_week9 sourcetype="week9:audit"
+| search command="/bin/sh"
+| table _time host command audit_id
