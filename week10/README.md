@@ -36,7 +36,7 @@ This week is a **desk-based analysis**. No attacks or tests were executed. The f
 | MITRE ATT&CK — Group G0016 (APT29): https://attack.mitre.org/groups/G0016/ | Primary source for the technique mapping |
 | Mandiant — [Tracking APT29 Phishing Campaigns](https://cloud.google.com/blog/topics/threat-intelligence/tracking-apt29-phishing-campaigns/) (2022) | Documented embassy-themed phishing, compromised sender addresses and misuse of legitimate cloud services |
 | CrowdStrike — [COZY BEAR Adversary Profile](https://www.crowdstrike.com/en-us/adversaries/cozy-bear/) | Group identification, motivations, attribution assessment and related names |
-| Mandiant — [APT1: Exposing One of China's Cyber Espionage Units](https://www.mandiant.com/sites/default/files/2021-09/mandiant-apt1-report.pdf) (2013) | Methodological comparison only; APT1 is a **different** group and is not evidence of APT29 techniques |
+| Mandiant — [APT1: Exposing One of China's Cyber Espionage Units](https://nsarchive.gwu.edu/document/21484-document-83) (2013) | Methodological comparison only; APT1 is a **different** group and is not evidence of APT29 techniques |
 | Mandiant — [APT29 Uses WINELOADER to Target German Political Parties](https://cloud.google.com/blog/topics/threat-intelligence/apt29-wineloader-german-political-parties) (2024) | Additional campaign context; includes a documented reference to T1082 in a specific campaign |
 
 > The technique table was checked against the **MITRE ATT&CK G0016 group page (version 6.2, modified July 31, 2026)**. Vendor reports provide additional context. The Mandiant APT1 report is included as syllabus background, not as evidence about APT29.
@@ -75,7 +75,7 @@ The table lists techniques associated with APT29 in MITRE ATT&CK that are releva
 
 For a concise, defense-friendly mapping table and evidence trace, see [MITRE_ATTACK_Mapping.md](MITRE_ATTACK_Mapping.md). The [Navigator layer JSON](attack-navigator-layer.json) contains selected APT29 techniques from the mapping table and can be imported into [MITRE ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/). The layer is an analytical visualization, **not proof of executing these techniques**.
 
-The optional Navigator screenshot `screenshots/w10_navigator_apt29.png` must be captured from the live Navigator interface after importing the layer; it has not yet been submitted.
+The exported [APT29 Navigator SVG](screenshots/w10_navigator_apt29.svg) is included in Section 10.2. It visualizes a group profile captured before the later extension of the selected 21-technique JSON layer; the [current analytical JSON layer](attack-navigator-layer.json) is the up-to-date selection.
 
 ## 6. Phishing and Infrastructure Focus
 
@@ -86,8 +86,11 @@ This section connects the APT29 analysis to the project topic.
 **Infrastructure behaviors relevant to CTI.**
 
 - Use of compromised legitimate domains (T1584.001) means domain reputation alone is not enough for detection.
-- Use of trusted services and domain fronting (T1090.004) hides C2 destinations behind legitimate providers.
+- **Legitimate web and email services:** APT29's use of third-party web services (T1583.006) and spearphishing via service (T1566.003) can complicate infrastructure attribution and blocking.
+- **Older domain-fronting activity:** MITRE separately documents APT29's use of Tor's meek plugin (T1090.004) to obscure C2 destinations. This is distinct from ordinary use of trusted services.
 - Cloud accounts and identity abuse (T1136.003, T1110.003) shift detection toward authentication logs.
+
+**Documented campaign example — WINELOADER (Mandiant, 2024).** In a German political-party targeting campaign, a phishing invitation contained a link to a ZIP archive hosted on a compromised website. The archive delivered a ROOTSAW first-stage component, followed by WINELOADER. This chain illustrates how a convincing lure, a compromised legitimate website, and staged file delivery intersect in phishing-infrastructure analysis. We do not publish the campaign's actionable URLs or claim our laboratory observed this activity. [Source: Mandiant, March 2024](https://cloud.google.com/blog/topics/threat-intelligence/apt29-wineloader-german-political-parties).
 
 **Infrastructure indicators we would collect for a phishing investigation.**
 
@@ -117,7 +120,7 @@ This section connects the APT29 analysis to the project topic.
 
 - **Platform gap:** the lab uses Linux (Kali); most of the listed APT29 techniques are documented on Windows, so Sysmon and Windows Event Logs would be needed.
 - **Telemetry gap:** only `execve` process execution is monitored. File access, WMI, authentication and network events are not collected.
-- **Pipeline gap:** events were forwarded manually, and the alert was validated on a synthetic event only (see Week 9 limitations).
+- **Pipeline gap:** events were forwarded manually. The scheduled alert was validated with both a synthetic control event and **one genuine Auditd event (ID `48047`) manually forwarded via HEC**; continuous automatic forwarding was not tested (see [Week 9](../week9/README.md)).
 - **Rule gap:** the alert condition `command="/bin/sh"` is narrow.
 
 These gaps mean we cannot claim that our lab detects APT29 techniques. The comparison shows what telemetry would have to be added. The April 2022 Mandiant campaign appendix offers a documented **technique-level** link to our T1082 test and theoretical T1003.008 discussion; it is not evidence of matching APT29 payloads, commands, infrastructure, or end-to-end detection.
@@ -191,4 +194,4 @@ Our team used AI assistance to organize the research, clarify ATT&CK terminology
 | Campaign links to Week 9 | ChatGPT | Distinguished tested T1082, theoretical T1003.008, and APT29 campaign reporting | Mandiant April 2022 TTP appendix and Week 9 results |
 | Language and documentation improvements | Claude; ChatGPT | Edited wording, references and limitations | Reviewed source claims and repository evidence |
 
-The Week 10 work is a source-based study, not an emulation of APT29. AI-generated statements were checked against primary sources, and no observations or screenshots were fabricated. Each team member must ensure this disclosure reflects the tools they actually used.
+The Week 10 work is a source-based study, not an emulation of APT29. AI-generated statements were checked against primary sources, and no observations or screenshots were fabricated.
