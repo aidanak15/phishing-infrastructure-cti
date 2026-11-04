@@ -119,7 +119,7 @@ The Week 9 tests demonstrate two types of post-access behavior: Unix shell execu
 
 By combining phishing-related IOCs with endpoint logs in a SIEM, analysts can develop more informed threat hunting hypotheses.
 
-These laboratory tests did not establish a direct connection between the simulated commands and any real phishing campaign.
+These laboratory tests did not establish a direct connection between the simulated commands and any real phishing campaign. However, Mandiant's [2022 analysis of APT29 phishing campaigns](https://cloud.google.com/blog/topics/threat-intelligence/tracking-apt29-phishing-campaigns/) lists **T1082** and **T1003.008** among its reported ATT&CK TTPs. This provides a literature-level connection to the executed T1082 test and the theoretical T1003.008 discussion, **not** proof that the lab reproduced APT29 commands, infrastructure, or activity.
 
 ## 7. SIEM Detection Analysis
 
@@ -368,4 +368,4 @@ ChatGPT (OpenAI) was used during the Week 9 laboratory and reporting workflow.
 | SPL queries and scheduled alert documentation | ChatGPT | Reviewed Splunk search results and the scheduled alert's trigger history |
 | Report structure and limitations | ChatGPT | Compared every claimed outcome against observed screenshots and test results |
 
-The team should disclose any additional AI tools they actually used before submission. Scheduled alert validation used both an initial synthetic control event and a later genuine, manually forwarded Auditd event (ID `48047`). AI assistance did not replace laboratory experiments.
+Scheduled alert validation used both an initial synthetic control event and a later genuine, manually forwarded Auditd event (ID `48047`). AI assistance did not replace laboratory experiments.
