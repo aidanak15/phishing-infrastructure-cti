@@ -66,11 +66,11 @@ The table lists techniques associated with APT29 in MITRE ATT&CK that are releva
 
 > The "Use by APT29" column summarizes the MITRE [G0016 Techniques Used table](https://attack.mitre.org/groups/G0016/). Not all techniques belong to the same campaign. For campaign-specific evidence, see the references cited by MITRE and the Mandiant report.
 
-### 5.1 Optional: ATT&CK Navigator layer
+### 5.1 Mapping artifacts and optional ATT&CK Navigator
 
-A Navigator layer may be added later; no screenshot is claimed as captured yet:
+For a concise, defense-friendly mapping table and evidence trace, see [MITRE_ATTACK_Mapping.md](MITRE_ATTACK_Mapping.md). The [Navigator layer JSON](attack-navigator-layer.json) contains selected APT29 techniques from the mapping table and can be imported into [MITRE ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/). The layer is an analytical visualization, **not proof of executing these techniques**.
 
-`![APT29 Navigator layer](screenshots/w10_navigator_apt29.png)`
+The optional Navigator screenshot `screenshots/w10_navigator_apt29.png` must be captured from the live Navigator interface after importing the layer; it has not yet been submitted.
 
 ## 6. Phishing and Infrastructure Focus
 
@@ -142,9 +142,12 @@ The analysis supports the project direction: phishing infrastructure indicators 
 
 ## 10. Screenshots and Evidence
 
-- Suggested screenshot (not yet captured): MITRE ATT&CK group page for APT29 — `screenshots/w10_mitre_g0016.png`
-- Suggested optional screenshot (not yet captured): `screenshots/w10_navigator_apt29.png`
-- Optional report notes (not yet created): `notes/w10_sources.md`
+- [APT29 Mapping Table](MITRE_ATTACK_Mapping.md) — completed analytical artifact, with technique IDs, evidence and telemetry considerations.
+- [ATT&CK Navigator layer JSON](attack-navigator-layer.json) — completed importable analytical artifact.
+- **Pending genuine screenshot:** MITRE ATT&CK group page for APT29 — `screenshots/w10_mitre_g0016.png` (capture from browser, showing G0016 and selected techniques).
+- **Pending optional genuine screenshot:** imported Navigator layer — `screenshots/w10_navigator_apt29.png` (capture from browser after import).
+
+No screenshots are claimed to exist until they are actually captured and committed.
 
 ## 11. References
 
