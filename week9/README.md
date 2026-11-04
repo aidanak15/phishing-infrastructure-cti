@@ -277,13 +277,19 @@ These screenshots show the test execution in Kali Linux and the corresponding re
 
 ![T1059.004 Execution](screenshots/03_atomic_test_execution.png)
 
+This screenshot shows the safe T1059.004 Unix Shell test being executed in Kali Linux. The script used a loopback connectivity check to demonstrate shell execution without contacting an external target.
+
 **Event received in Splunk:**
 
 ![T1059.004 Splunk Event](screenshots/04_atomic_test_splunk.png)
 
+This screenshot confirms that the selected T1059.004 execution event was manually forwarded to Splunk and can be retrieved from the `atomic_week9` index. It demonstrates successful ingestion of this event, not continuous log collection.
+
 **SPL detection query results:**
 
 ![T1059.004 Detection](screenshots/05_t1059_detection.png)
+
+This screenshot shows an SPL search filtering for the T1059.004 test event. The matching result provides evidence that the stored event can be located using its technique and command fields.
 
 ### Test 2 — T1082: System Information Discovery
 
@@ -291,13 +297,19 @@ These screenshots show the test execution in Kali Linux and the corresponding re
 
 ![T1082 Execution](screenshots/06_T1082_execution.png)
 
+This screenshot documents the safe T1082 System Information Discovery test in Kali Linux and the related Linux Audit records. Commands such as `uname` and `uptime` provide basic system information, and Auditd records their execution.
+
 **Events received in Splunk:**
 
 ![T1082 Splunk Events](screenshots/07_T1082_splunk.png)
 
+This screenshot shows the two selected T1082 events that were manually forwarded and found in Splunk. It confirms that the events are searchable after ingestion.
+
 ### Overall Detection Summary
 
 ![Week 9 Detection Summary](screenshots/08_week9_detection_summary.png)
+
+This screenshot summarizes the manually forwarded events from both tests. The results cover one selected T1059.004 event and two selected T1082 events; they do not represent comprehensive detection of either technique.
 
 Both selected tests generated Linux Audit process telemetry that was manually selected and transferred to Splunk. The additional scheduled alert validations, including the later real Auditd event, are documented in Section 10.
 
@@ -348,15 +360,25 @@ For the additional validation, we generated a harmless Auditd event with ID 4804
 
 ![Triggered Alert](screenshots/09_splunk_alert_triggered.png)
 
+This screenshot shows the scheduled Unix shell detection alert appearing in Splunk's Trigger History during synthetic-event validation. It confirms that the scheduled rule generated an alert after matching a test event.
+
 ![Alert Results — synthetic validation](screenshots/10_splunk_alert_results.png)
+
+This screenshot shows the matching synthetic control event in the alert's results. The record demonstrates that the `/bin/sh` search condition matched an indexed test event, but the event itself was artificially created.
 
 **Additional genuine Auditd event evidence:**
 
 ![Real Auditd EXECVE event 48047](screenshots/11_real_audit_event.png)
 
+This screenshot documents genuine Linux Audit evidence for execution event ID `48047`. The underlying `EXECVE` and `SYSCALL` records were checked using `ausearch`, distinguishing this event from the earlier synthetic control data.
+
 ![Triggered Alert for the real Auditd event](screenshots/12_real_audit_alert_triggered.png)
 
+This screenshot shows that the scheduled Splunk alert triggered at 08:55:01 UTC after the genuine Auditd event had been manually forwarded. The preceding search at 08:50 UTC found no matching records because ingestion had not yet occurred.
+
 ![Real Auditd event 48047 in scheduled alert results](screenshots/13_real_audit_alert_results.png)
+
+This screenshot shows the matching alert result for the genuine Auditd event: `host=kali-week9`, `command=/bin/sh`, and `audit_id=48047`. It confirms a successful match and alert trigger, while forwarding from Kali remained manual.
 
 ## 11. Additional MITRE ATT&CK Analysis — T1003
 
