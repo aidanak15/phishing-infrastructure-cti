@@ -142,12 +142,27 @@ The analysis supports the project direction: phishing infrastructure indicators 
 
 ## 10. Screenshots and Evidence
 
-- [APT29 Mapping Table](MITRE_ATTACK_Mapping.md) — completed analytical artifact, with technique IDs, evidence and telemetry considerations.
-- [ATT&CK Navigator layer JSON](attack-navigator-layer.json) — completed importable analytical artifact.
-- **Pending genuine screenshot:** MITRE ATT&CK group page for APT29 — `screenshots/w10_mitre_g0016.png` (capture from browser, showing G0016 and selected techniques).
-- **Pending optional genuine screenshot:** imported Navigator layer — `screenshots/w10_navigator_apt29.png` (capture from browser after import).
+The following evidence supports the APT29 threat intelligence analysis and MITRE ATT&CK mapping.
 
-No screenshots are claimed to exist until they are actually captured and committed.
+### 10.1 MITRE ATT&CK Group Profile
+
+The screenshot shows the official MITRE ATT&CK APT29 (G0016) page, including the Techniques Used table.
+
+![APT29 MITRE ATT&CK Techniques](screenshots/w10_mitre_g0016.png)
+
+### 10.2 ATT&CK Navigator
+
+An ATT&CK Navigator layer was exported to visualize the documented techniques associated with APT29.
+
+![APT29 ATT&CK Navigator](screenshots/w10_navigator_apt29.svg)
+
+The Navigator visualization represents publicly documented techniques, not techniques executed during Week 10.
+
+### 10.3 Supporting Artifacts
+
+- [MITRE ATT&CK Mapping Table](MITRE_ATTACK_Mapping.md)
+- [ATT&CK Navigator JSON Layer](attack-navigator-layer.json)
+- [Week 9 Laboratory Results](../week9/README.md)
 
 ## 11. References
 
