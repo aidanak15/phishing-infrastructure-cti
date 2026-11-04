@@ -137,7 +137,7 @@ Selected events were processed and forwarded through Splunk HTTP Event Collector
 
 Both selected tests generated observable telemetry.
 
-These Week 9 atomic-test results demonstrate retrieval of manually forwarded events, not automated forwarding or broad threat detection. A separate scheduled alert was validated only with a synthetic control event (Section 10).
+These Week 9 atomic-test results demonstrate retrieval of manually forwarded events, not automated forwarding or broad threat detection. A scheduled alert was first validated with a synthetic control event and subsequently with a separately generated, real Auditd event manually forwarded through HEC (Section 10).
 
 ### 7.1 Linux Audit Configuration
 
@@ -193,7 +193,7 @@ index=atomic_week9 sourcetype="week9:audit"
 
 The scheduled alert ran every five minutes and searched the preceding ten minutes of indexed events.
 
-The alert was successfully validated using a separate synthetic event transmitted through Splunk HEC.
+The alert was first validated using a separate synthetic event transmitted through Splunk HEC. On November 4, a second validation used a newly generated **real Kali Auditd** event (Audit ID `48047`) that was manually extracted and forwarded via HEC.
 
 **Interpretation:** The searches confirm successful ingestion and retrieval of selected events. Because the original Auditd events were manually forwarded, these results do not establish continuous telemetry collection or comprehensive detection coverage.
 
@@ -202,7 +202,7 @@ The alert was successfully validated using a separate synthetic event transmitte
 - Only two safe, manually adapted Atomic Red Team tests were executed.
 - The experiments were performed in an isolated Kali Linux virtual machine.
 - Selected Linux Audit events were manually extracted, sanitized, and forwarded to Splunk HEC. Therefore, the results validate the selected-event ingestion pipeline rather than continuous or comprehensive detection coverage.
-- An automated Splunk alert was successfully triggered using a separate synthetic validation event. Detection based on an independently forwarded real Auditd event was not yet validated.
+- The scheduled Splunk alert was verified twice: initially on a synthetic control event, and later on **one real Auditd event** with Audit ID `48047` that was **manually** forwarded via HEC. This does not demonstrate continuous or automated Auditd log forwarding.
 - The alert condition `command="/bin/sh"` is narrow and may miss other shell executable paths, including `/bin/bash` and `/usr/bin/sh`.
 - The three selected Atomic Test events were visible in Splunk, but this does not establish a general detection rate.
 - The tests did not reproduce a complete phishing attack.
@@ -241,7 +241,7 @@ The following screenshots document the execution of the adapted Atomic Red Team 
 
 ![Week 9 Detection Summary](screenshots/08_week9_detection_summary.png)
 
-Both selected tests generated Linux Audit process telemetry that was manually selected and transferred to Splunk. The screenshots here show manual SPL validation; the **separately validated synthetic-event scheduled alert** is documented in Section 10.
+Both selected tests generated Linux Audit process telemetry that was manually selected and transferred to Splunk. The additional scheduled alert validations, including the later real Auditd event, are documented in Section 10.
 
 ## 10. Automated Detection Alert Validation
 
@@ -259,7 +259,7 @@ An additional scheduled alert was configured in Splunk Enterprise to monitor Uni
 - Action: Add to Triggered Alerts
 - Severity: Medium
 
-A synthetic validation event was submitted through Splunk HEC to test the alert.
+**Validation A — synthetic control event:** A synthetic validation event was submitted through Splunk HEC to test the alert.
 
 **Observed results:**
 
@@ -268,13 +268,29 @@ A synthetic validation event was submitted through Splunk HEC to test the alert.
 - Splunk recorded one automatic alert trigger on November 4, 2026, at 07:10 UTC.
 - The matching event was visible through the View Results page.
 
-**Conclusion:** The experiment successfully validated an automated Splunk alert using controlled test telemetry. This demonstrates rule execution and alert generation, but does not establish the ability to detect real phishing attacks.
+### 10.1 Additional validation — real Auditd event (November 4, 2026)
+
+A separate harmless Kali Linux command, `/bin/sh -c 'echo "Week9 real audit event validation"'`, generated a genuine `EXECVE` record in Linux Audit with **Audit ID `48047`** and audit key `week9_exec`. Using `ausearch -a 48047 -i`, the team verified the raw `EXECVE`, `SYSCALL` and associated records. The event was then **manually** transformed into HEC JSON while retaining the original audit record in `audit_raw`, with fields `command=/bin/sh`, `audit_id=48047` and `validation_type=real_audit_manual_forward`.
+
+Splunk HEC returned `{"text":"Success","code":0}`. The event was indexed under `index=atomic_week9` and `sourcetype=week9:audit`; an independent search retrieved **one** matching event. The scheduled search at **08:50 UTC** ran before ingestion and reported zero results; its next run at **08:55:01 UTC** returned `result_count=1`. The alert's Trigger History recorded a firing at **08:55:01 UTC**, and **View Results** contained the matching `host=kali-week9`, `command=/bin/sh`, `audit_id=48047` entry.
+
+**Interpretation:** This verifies that the configured scheduled Splunk alert can match and fire on a **real, manually forwarded Auditd event**, as well as on synthetic test data. It does **not** demonstrate automatic or continuous forwarding from Kali, detection of malicious activity, or detection of an actual phishing attack.
+
+**Conclusion:** Rule execution, scheduled triggering, and the manually forwarded real-event path were verified in this educational environment. The original two Atomic Red Team adaptations remain separate from this later validation.
 
 ### Alert Evidence
 
 ![Triggered Alert](screenshots/09_splunk_alert_triggered.png)
 
-![Alert Results](screenshots/10_splunk_alert_results.png)
+![Alert Results — synthetic validation](screenshots/10_splunk_alert_results.png)
+
+**Additional genuine Auditd event evidence:**
+
+![Real Auditd EXECVE event 48047](screenshots/11_real_audit_event.png)
+
+![Triggered Alert for the real Auditd event](screenshots/12_real_audit_alert_triggered.png)
+
+![Real Auditd event 48047 in scheduled alert results](screenshots/13_real_audit_alert_results.png)
 
 ## 11. Additional MITRE ATT&CK Analysis — T1003
 
@@ -323,13 +339,13 @@ Two techniques, T1059.004 (Unix Shell) and T1082 (System Information Discovery),
 
 The experiment confirmed that selected Auditd events could be transferred, indexed, and analyzed using SPL queries. However, this represents validation of the manual event ingestion pipeline rather than comprehensive or continuous detection coverage.
 
-A scheduled Splunk detection alert was also configured and successfully triggered using one separate synthetic validation event. This confirmed that the alert rule and scheduling mechanism worked, but did not establish automatic detection of real Auditd events.
+A scheduled Splunk detection alert was configured and successfully triggered using an initial synthetic control event and, in a separate validation, a genuine Auditd event (Audit ID `48047`) manually forwarded through HEC. The real event was matched by the scheduled search, and the alert fired at 08:55:01 UTC. This did not establish continuous automatic Auditd collection or detection of malicious activity.
 
 Additionally, T1003 (OS Credential Dumping) was reviewed theoretically to identify relevant credential-access risks and potential monitoring opportunities. No credential dumping was performed.
 
 These results demonstrate how endpoint telemetry, SIEM analysis, and MITRE ATT&CK mapping can support investigations of suspicious post-compromise activity associated with phishing incidents.
 
-Future improvements include automated Auditd log forwarding, broader shell execution detection rules, and validation using newly generated real audit events.
+Future improvements include automated Auditd log forwarding, broader shell execution detection rules, and assessing noisy legitimate `/bin/sh` activity to reduce false positives.
 
 ## 13. References
 
@@ -352,4 +368,4 @@ ChatGPT (OpenAI) was used during the Week 9 laboratory and reporting workflow.
 | SPL queries and scheduled alert documentation | ChatGPT | Reviewed Splunk search results and the scheduled alert's trigger history |
 | Report structure and limitations | ChatGPT | Compared every claimed outcome against observed screenshots and test results |
 
-The team should disclose any additional AI tools they actually used before submission. A separate synthetic control event, not a real forwarded audit record, was used for scheduled alert validation. AI assistance did not replace laboratory experiments.
+The team should disclose any additional AI tools they actually used before submission. Scheduled alert validation used both an initial synthetic control event and a later genuine, manually forwarded Auditd event (ID `48047`). AI assistance did not replace laboratory experiments.
