@@ -49,20 +49,25 @@ The table lists techniques associated with APT29 in MITRE ATT&CK that are releva
 |---|---|---|---|---|
 | Resource Development | T1584.001 | Compromise Infrastructure: Domains | Compromised domains used for C2 during the SolarWinds campaign | Infrastructure analysis: compromised legitimate domains are harder to block by reputation |
 | Resource Development | T1587.001 | Develop Capabilities: Malware | Custom malware families developed for operations | Payload delivery behind phishing |
+| Resource Development | T1583.006 | Acquire Infrastructure: Web Services | APT29 used legitimate services such as Dropbox and Constant Contact in operations | Legitimate service abuse, hosted links, and web-service traffic |
+| Resource Development | T1586.002 | Compromise Accounts: Email Accounts | Compromised email accounts used to support phishing campaigns | Sender trust, mailbox audit trails and email-header correlation |
 | Initial Access | T1566.001 | Phishing: Spearphishing Attachment | Malicious attachments sent to selected targets | Core phishing technique |
 | Initial Access | T1566.002 | Phishing: Spearphishing Link | Links leading to malicious content | Core phishing technique; URL and domain IOCs |
+| Initial Access | T1566.003 | Phishing: Spearphishing via Service | APT29 used Constant Contact to distribute phishing emails | Abuse of trusted email delivery services |
 | Execution | T1204.002 | User Execution: Malicious File | Victim opens or runs a delivered file | Follows successful phishing |
-| Execution | T1059.001 | Command and Scripting Interpreter: PowerShell | PowerShell used for execution | Related to Week 9 test T1059.004 (Unix shell) |
+| Execution | T1059.001 | Command and Scripting Interpreter: PowerShell | PowerShell used for execution | Conceptually related to Week 9 T1059.004 Unix shell; distinct subtechnique and platform |
+| Defense Evasion | T1027.006 | Obfuscated Files or Information: HTML Smuggling | APT29 embedded files within HTML attachments to obscure payload delivery | HTML attachment inspection, browser and endpoint telemetry |
+| Defense Evasion | T1553.005 | Subvert Trust Controls: Mark-of-the-Web Bypass | Embedded ISO/VHDX content in HTML to evade origin-based trust controls | Attachment and file provenance telemetry |
 | Persistence | T1546.003 | WMI Event Subscription | WMI subscriptions used for persistence | Host telemetry needed beyond process execution |
 | Persistence | T1547.001 | Registry Run Keys / Startup Folder | Registry Run keys used to maintain access | Windows registry monitoring; not tested |
 | Persistence | T1136.003 | Create Account: Cloud Account | Creation of cloud accounts (e.g. Azure AD) | Cloud identity monitoring |
 | Privilege Escalation | T1548.002 | Bypass User Account Control | UAC bypass | Windows telemetry |
 | Credential Access | T1110.003 | Brute Force: Password Spraying | Password spray attacks against accounts | Authentication log monitoring |
-| Credential Access | T1003.002 | OS Credential Dumping: Security Account Manager | APT29 has saved Windows registry hives for credential-related access | Windows credential-access telemetry; not tested |
+| Credential Access | T1003.002 | OS Credential Dumping: Security Account Manager | MITRE reports APT29 used the Windows `reg save` command to save registry hives | Windows sensitive registry access telemetry; not tested |
 | Credential Access | T1003.004 | OS Credential Dumping: LSA Secrets | APT29 has extracted LSA-related secrets from Windows registry hives | Windows credential-access telemetry; not tested |
 | Credential Access | T1003.006 | OS Credential Dumping: DCSync | APT29 used privileged access to replicate directory credential data during SolarWinds | Domain controller telemetry; not tested |
 | Collection | T1560.001 | Archive Collected Data: Archive via Utility | Stolen data compressed (e.g. 7-Zip) before exfiltration | Process execution monitoring |
-| Command and Control | T1090.004 | Proxy: Domain Fronting | Traffic disguised through trusted services | Network CTI: infrastructure behind CDNs |
+| Command and Control | T1090.004 | Proxy: Domain Fronting | MITRE documents older APT29 activity using Tor's meek domain-fronting plugin to obscure C2 destinations | Network CTI: proxy/TLS infrastructure and traffic patterns |
 
 > The "Use by APT29" column summarizes the MITRE [G0016 Techniques Used table](https://attack.mitre.org/groups/G0016/). Not all techniques belong to the same campaign. For campaign-specific evidence, see the references cited by MITRE and the Mandiant report.
 
@@ -101,8 +106,9 @@ This section connects the APT29 analysis to the project topic.
 | APT29-relevant technique | Week 9 status | Observation |
 |---|---|---|
 | T1059 | **Partially tested**: T1059.004 (Unix shell) on Kali Linux | APT29 is documented using PowerShell (T1059.001) on Windows. Our lab did not test PowerShell |
-| T1082 | **Tested** on Kali Linux, but **not listed on the current G0016 group page** | Visible in Splunk through manually forwarded Auditd events; this is a Week 9 exercise, not evidence of matching the currently listed APT29 technique set. Mandiant's 2024 WINELOADER campaign report separately references T1082. |
-| T1003.002 / T1003.004 / T1003.006 | **Theoretical only** | These Windows-specific subtechniques are documented on G0016; our Week 9 Linux-specific discussion (T1003.007/.008) did not emulate APT29 and no credential access was performed |
+| T1082 | **Tested** on Kali Linux; **not listed in the current G0016 group technique table** | Two selected events were manually forwarded and retrieved in Splunk. **Mandiant's April 2022 APT29 phishing report lists T1082** in its campaign TTP appendix; the 2024 WINELOADER report also lists it. We did **not** reproduce the campaign or establish its exact commands. |
+| T1003.002 / T1003.004 / T1003.006 | **Theoretical only** | These Windows-specific subtechniques are listed on G0016. No credential access was performed. |
+| T1003.008 | **Theoretical only** (Week 9 Linux discussion) | **Mandiant's April 2022 APT29 phishing report lists T1003.008** in its broader TTP appendix, although the current G0016 group table does not list it. Our lab performed no credential access. |
 | T1566.001 / T1566.002 | **Not tested** | Phishing delivery is outside the scope of our endpoint lab; covered by CTI analysis of URLs and domains |
 | T1584.001, T1090.004 | **Not applicable to atomic tests** | Infrastructure techniques are analyzed through CTI (domain, IP, certificate data), not emulated |
 | T1546.003, T1547.001, T1548.002, T1560.001 | **Not tested** | Windows persistence/privilege and archival behaviors require telemetry not available in this lab |
@@ -114,7 +120,7 @@ This section connects the APT29 analysis to the project topic.
 - **Pipeline gap:** events were forwarded manually, and the alert was validated on a synthetic event only (see Week 9 limitations).
 - **Rule gap:** the alert condition `command="/bin/sh"` is narrow.
 
-These gaps mean we cannot claim that our lab detects APT29 techniques. The comparison shows what telemetry would have to be added.
+These gaps mean we cannot claim that our lab detects APT29 techniques. The comparison shows what telemetry would have to be added. The April 2022 Mandiant campaign appendix offers a documented **technique-level** link to our T1082 test and theoretical T1003.008 discussion; it is not evidence of matching APT29 payloads, commands, infrastructure, or end-to-end detection.
 
 ### 7.2 Proposed next steps
 
@@ -170,19 +176,19 @@ The Navigator visualization represents publicly documented techniques, not techn
 2. Mandiant — Tracking APT29 Phishing Campaigns (2022): https://cloud.google.com/blog/topics/threat-intelligence/tracking-apt29-phishing-campaigns/
 3. Mandiant — APT29 Uses WINELOADER to Target German Political Parties (2024): https://cloud.google.com/blog/topics/threat-intelligence/apt29-wineloader-german-political-parties
 4. CrowdStrike — COZY BEAR Adversary Profile: https://www.crowdstrike.com/en-us/adversaries/cozy-bear/
-5. Mandiant — APT1 Report (recommended background case study; **not** an APT29 source): https://www.mandiant.com/sites/default/files/2021-09/mandiant-apt1-report.pdf
+5. Mandiant — APT1 Report (recommended historical background; **not** an APT29 source): https://nsarchive.gwu.edu/document/21484-document-83 (archived source description; former Mandiant PDF URL now redirects)
 6. MITRE ATT&CK Navigator: https://mitre-attack.github.io/attack-navigator/
 7. Week 9 report of this repository: [../week9/README.md](../week9/README.md)
 
 ## 12. Use of AI
 
-The supplied draft states that Claude (Anthropic) helped prepare the original outline and technique summaries. ChatGPT (OpenAI) was used for Week 9 laboratory assistance and the Week 10 source and mapping review. Team members should confirm the exact tools actually used before submission.
+Our team used AI assistance to organize the research, clarify ATT&CK terminology, compare selected public sources, and improve the presentation of limitations. Claude (Anthropic) assisted with the initial draft; ChatGPT (OpenAI) assisted with revision, MITRE cross-checking, and comparison to the Week 9 laboratory.
 
-| Task | AI tool | How it was used | Human verification |
+| Task | AI tool | Work performed | Evidence checked |
 |---|---|---|---|
-| Report outline | Claude | Generated the section structure | Adapted to our project |
-| APT29 technique summary | Claude; ChatGPT | Initial draft and subsequent MITRE G0016 cross-check | Compared table IDs to MITRE's current G0016 list and consulted Mandiant/CrowdStrike sources |
-| Week 9 comparison | Claude | Suggested the gap analysis format | Verified against our own Week 9 results |
-| Source verification | ChatGPT | Replaced reference placeholders with traceable public sources | Primary source URLs supplied for independent review |
+| Outline and early TTP mapping draft | Claude | Helped structure sections and draft technique summaries | MITRE G0016 group page and published sources |
+| Technique cross-check and revised mapping | ChatGPT | Compared selected APT29 technique IDs with MITRE G0016 | MITRE techniques table |
+| Campaign links to Week 9 | ChatGPT | Distinguished tested T1082, theoretical T1003.008, and APT29 campaign reporting | Mandiant April 2022 TTP appendix and Week 9 results |
+| Language and documentation improvements | Claude; ChatGPT | Edited wording, references and limitations | Reviewed source claims and repository evidence |
 
-All claims about APT29 must be traceable to the cited sources. AI was used as a supporting tool and not as a replacement for reading the primary reports or for independent verification.
+The Week 10 work is a source-based study, not an emulation of APT29. AI-generated statements were checked against primary sources, and no observations or screenshots were fabricated. Each team member must ensure this disclosure reflects the tools they actually used.
