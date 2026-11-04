@@ -14,20 +14,25 @@ Map selected techniques documented for APT29 to ATT&CK tactics, phishing-infrast
 |---|---|---|---|---|
 | Resource Development | T1584.001 | Compromise Infrastructure: Domains | APT29 used compromised domains as infrastructure in documented campaigns | Domain history, passive DNS, hosting changes, certificate history |
 | Resource Development | T1587.001 | Develop Capabilities: Malware | APT29 used custom malware capabilities | Reported file hashes and validated campaign indicators |
+| Resource Development | T1583.006 | Acquire Infrastructure: Web Services | Used legitimate web services in campaigns | Service hosting and domain indicators |
+| Resource Development | T1586.002 | Compromise Accounts: Email Accounts | Used compromised email accounts for phishing | Mail headers, sender history and email audit trails |
 | Initial Access | T1566.001 | Phishing: Spearphishing Attachment | Targeted attachments used to deliver malicious content | Email header logs, attachment details, mail security telemetry |
 | Initial Access | T1566.002 | Phishing: Spearphishing Link | Targeted links used in initial-access attempts | URLs, redirects, proxy/DNS logs, mail gateway logs |
+| Initial Access | T1566.003 | Phishing: Spearphishing via Service | Used Constant Contact for phishing delivery | Trusted service abuse, mail logs |
 | Execution | T1204.002 | User Execution: Malicious File | Execution depended on a recipient opening a delivered file | Parent-child process relationships and endpoint events |
 | Execution | T1059.001 | Command and Scripting Interpreter: PowerShell | APT29 used PowerShell for command execution | Windows process creation and PowerShell audit telemetry |
+| Defense Evasion | T1027.006 | Obfuscated Files or Information: HTML Smuggling | HTML attachments embedded malicious files | Attachment inspection and browser/endpoint telemetry |
+| Defense Evasion | T1553.005 | Subvert Trust Controls: Mark-of-the-Web Bypass | Used embedded disk images to bypass file-origin controls | Download origin and file provenance telemetry |
 | Persistence | T1546.003 | Event Triggered Execution: WMI Event Subscription | Used WMI subscriptions for persistence | WMI operational logs and endpoint configuration changes |
 | Persistence | T1547.001 | Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder | Used autorun registry entries | Registry change telemetry and autorun inventory |
 | Persistence | T1136.003 | Create Account: Cloud Account | Created accounts to maintain access | Cloud identity and administrator audit logs |
 | Privilege Escalation | T1548.002 | Abuse Elevation Control Mechanism: Bypass User Account Control | Used Windows elevation-control bypass techniques | Windows elevation and process telemetry |
 | Credential Access | T1110.003 | Brute Force: Password Spraying | Attempted logins across multiple accounts | Authentication failures across accounts, identity audit events |
-| Credential Access | T1003.002 | OS Credential Dumping: Security Account Manager | Credential-related access to Windows registry hives | Windows security and sensitive registry access events |
+| Credential Access | T1003.002 | OS Credential Dumping: Security Account Manager | MITRE reports APT29 saved Windows registry hives using `reg save` | Windows security and sensitive registry access events |
 | Credential Access | T1003.004 | OS Credential Dumping: LSA Secrets | Access to LSA-related secret material | Endpoint detection and Windows security events |
 | Credential Access | T1003.006 | OS Credential Dumping: DCSync | Directory replication techniques used in credential access | Domain controller replication and identity telemetry |
 | Collection | T1560.001 | Archive Collected Data: Archive via Utility | Utilities used to archive collected information | Process and file creation telemetry |
-| Command and Control | T1090.004 | Proxy: Domain Fronting | Used trusted domains/services as fronts for communication | Proxy, TLS and network destination telemetry |
+| Command and Control | T1090.004 | Proxy: Domain Fronting | Older activity involving Tor meek domain fronting | Proxy, TLS and network destination telemetry |
 
 **Interpretation:** A technique listed for APT29 is not proof that a corresponding event in our lab was produced by that group. Campaign attribution requires independent contextual evidence.
 
@@ -36,8 +41,8 @@ Map selected techniques documented for APT29 to ATT&CK tactics, phishing-infrast
 | Activity in Week 9 | Result | Relation to documented APT29 |
 |---|---|---|
 | T1059.004 — Unix Shell on Kali | Manually adapted and executed; one selected event forwarded to Splunk | Not the same as APT29's T1059.001 PowerShell technique; no group emulation is claimed |
-| T1082 — System Information Discovery on Kali | Executed; two selected events manually forwarded | Separate laboratory exercise; not in the currently displayed G0016 group-technique table |
-| T1003.007 / T1003.008 | Theoretical review only | Different Linux subtechniques than T1003.002/.004/.006 listed for APT29; no credentials accessed |
+| T1082 — System Information Discovery on Kali | Executed; two selected events manually forwarded | Mandiant's April 2022 APT29 phishing report lists T1082; it is not in the current G0016 group table. No campaign-specific test is claimed |
+| T1003.007 / T1003.008 | Theoretical review only | The Mandiant April 2022 campaign TTP list includes T1003.008; current G0016 group table includes different T1003 subtechniques. No credential data was accessed |
 | Synthetic `/bin/sh` alert-validation event | One scheduled alert trigger in Splunk | Demonstrates scheduled search behavior, not automatic detection of a real event or APT29 |
 
 Only selected `execve` telemetry was extracted and sent manually via HEC. Continuous forwarding, phishing infrastructure monitoring, cloud identity telemetry and APT29 detection were **not** validated.
