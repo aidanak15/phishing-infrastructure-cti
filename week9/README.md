@@ -25,9 +25,9 @@ For Week 9, we performed two safe, adapted Atomic Red Team tests in an isolated 
 | Virtualization | UTM |
 | Test Machine | Kali Linux 2025.1 |
 | Architecture | x86_64 |
-| Testing Framework | Atomic Red Team |
+| Test reference | Atomic Red Team YAML definitions (manually adapted; no Invoke-AtomicRedTeam runner used) |
 | Logging | Linux Audit (auditd) |
-| SIEM | Splunk Enterprise |
+| SIEM | Splunk Enterprise (installed version: to be verified in Splunk Web) |
 | Containerization | Docker |
 | Data Transfer | HTTP Event Collector (HEC) |
 | Splunk Index | `atomic_week9` |
@@ -39,8 +39,8 @@ The experiment followed these steps:
 1. Prepared Kali Linux and Splunk Enterprise.
 2. Installed and configured Linux Audit.
 3. Enabled monitoring of process execution events.
-4. Examined official Atomic Red Team test definitions.
-5. Executed two safe, adapted test procedures.
+4. Reviewed the [T1059.004 YAML](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.004/T1059.004.yaml) and [T1082 YAML](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1082/T1082.yaml) test definitions.
+5. Manually executed two harmless adaptations of the documented procedures. `Invoke-AtomicRedTeam` was not used.
 6. Extracted relevant audit events.
 7. Forwarded selected, sanitized events to Splunk through HEC.
 8. Analyzed the results with SPL queries.
@@ -57,7 +57,7 @@ The experiments were conducted in a controlled educational environment without m
 
 A simple shell script was created to display a message and perform a local connectivity check using `127.0.0.1`.
 
-The procedure was adapted from the official Atomic Red Team test.
+The shell-script procedure was manually adapted from [Atomic Red Team T1059.004 Test #1](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.004/T1059.004.yaml). Its test content was simplified to a benign local loopback check.
 
 **Observed results:**
 
@@ -80,7 +80,7 @@ The following commands were executed:
 - `cat /etc/os-release`
 - `uptime`
 
-The commands collected operating system information, kernel information, and system uptime.
+The commands collected operating system information, kernel information, and system uptime. They were manually adapted from [Atomic Red Team T1082 Test #3](https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1082/T1082.yaml), not executed with an automated test runner.
 
 **Observed results:**
 
@@ -125,7 +125,7 @@ These laboratory tests did not establish a direct connection between the simulat
 
 Linux Audit was configured to collect process execution events using the `execve` system call.
 
-Selected events were processed and forwarded through Splunk HTTP Event Collector to the `atomic_week9` index.
+Selected events were processed and forwarded through Splunk HTTP Event Collector to the `atomic_week9` index. The `week9:atomic` sourcetype stores selected, manually structured test results; `week9:audit` stores selected audit-like telemetry and the separate control event used for scheduled alert validation. These are not evidence of continuous raw Auditd forwarding.
 
 ### Detection Summary
 
@@ -133,11 +133,11 @@ Selected events were processed and forwarded through Splunk HTTP Event Collector
 |---|---|---|---:|---|
 | T1059.004 | Yes | Observed | 1 | Visible |
 | T1082 | Yes | Observed | 2 | Visible |
-| **Total** | **2 tests** | **Observed** | **3** | **2/2 visible** |
+| **Total** | **2 tests** | **Observed** | **3 selected** | **All 3 manually forwarded events retrieved** |
 
 Both selected tests generated observable telemetry.
 
-However, these results demonstrate event visibility and successful SPL searches rather than automated threat detection or alert generation.
+These Week 9 atomic-test results demonstrate retrieval of manually forwarded events, not automated forwarding or broad threat detection. A separate scheduled alert was validated only with a synthetic control event (Section 10).
 
 ### 7.1 Linux Audit Configuration
 
@@ -157,7 +157,7 @@ Relevant audit events were inspected using:
 sudo ausearch -k week9_exec -i
 ```
 
-The rule was configured for the laboratory session. It was not documented as a persistent audit rule across system reboots.
+The rule was configured for the laboratory session. It was not documented as a persistent audit rule across system reboots. The `auid` filter targets the current logged-in user's audit identity and relies on a valid Linux `loginuid`; if no events appear, inspect the audit session/login UID configuration before drawing conclusions.
 
 ### 7.2 Splunk Detection Queries
 
@@ -241,7 +241,7 @@ The following screenshots document the execution of the adapted Atomic Red Team 
 
 ![Week 9 Detection Summary](screenshots/08_week9_detection_summary.png)
 
-Both selected tests generated observable process execution telemetry. The results confirm successful event collection and manual SPL validation, not automated threat alerts.
+Both selected tests generated Linux Audit process telemetry that was manually selected and transferred to Splunk. The screenshots here show manual SPL validation; the **separately validated synthetic-event scheduled alert** is documented in Section 10.
 
 ## 10. Automated Detection Alert Validation
 
@@ -298,11 +298,7 @@ Our Kali Linux environment uses Linux Audit to monitor process execution. Howeve
 
 Additional, appropriately configured file-access auditing would be required to investigate suspicious access to sensitive authentication resources.
 
-Both subtechniques were analyzed theoretically. No credential extraction or password hash collection was performed.
-
-T1003 describes techniques used to obtain credential-related information from operating systems.
-
-This activity may occur after an attacker gains initial access through phishing and attempts to expand access within an organization's environment.
+Both subtechniques were analyzed theoretically. No credential extraction or password hash collection was performed. T1003 concerns credential access after compromise; it is relevant to interpreting potential post-phishing activity, but it was not tested in this laboratory.
 
 ### Potential Detection Indicators
 
@@ -317,9 +313,7 @@ Organizations should collect relevant operating system security logs, monitor ac
 
 ### Experiment Scope
 
-T1003 was reviewed theoretically. No credential dumping commands were executed, and no passwords, hashes, or authentication secrets were collected.
-
-The practical experiments remained focused on T1059.004 and T1082.
+The practical experiments remained focused on T1059.004 and T1082. No credential dumping commands or access to authentication secrets were performed.
 
 ## 12. Conclusion
 
@@ -342,12 +336,20 @@ Future improvements include automated Auditd log forwarding, broader shell execu
 1. Red Canary — Atomic Red Team: https://github.com/redcanaryco/atomic-red-team
 2. MITRE ATT&CK — T1059.004: https://attack.mitre.org/techniques/T1059/004/
 3. MITRE ATT&CK — T1082: https://attack.mitre.org/techniques/T1082/
-4. Splunk Documentation: https://docs.splunk.com/
+4. Red Canary — Atomic Red Team Wiki: https://github.com/redcanaryco/atomic-red-team/wiki
+5. Official T1059.004 test YAML: https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.004/T1059.004.yaml
+6. Official T1082 test YAML: https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1082/T1082.yaml
+7. Splunk Documentation: https://docs.splunk.com/
 
 ## 14. Use of AI
 
-ChatGPT (OpenAI) was used to assist with understanding Atomic Red Team, interpreting Linux Audit events, preparing SPL queries, troubleshooting laboratory configuration, and improving documentation.
+ChatGPT (OpenAI) was used during the Week 9 laboratory and reporting workflow.
 
-All reported practical results were obtained from the educational Kali Linux environment and verified using Linux Audit and Splunk Enterprise.
+| Task | Tool | Verification |
+|---|---|---|
+| Atomic Red Team and ATT&CK explanations | ChatGPT | Compared the descriptions to Atomic Red Team YAML and MITRE pages |
+| Auditd / HEC troubleshooting | ChatGPT | Checked terminal output, actual Auditd events and successful Splunk indexing |
+| SPL queries and scheduled alert documentation | ChatGPT | Reviewed Splunk search results and the scheduled alert's trigger history |
+| Report structure and limitations | ChatGPT | Compared every claimed outcome against observed screenshots and test results |
 
-AI was used as a supporting tool and not as a replacement for practical experimentation or independent verification.
+The team should disclose any additional AI tools they actually used before submission. A separate synthetic control event, not a real forwarded audit record, was used for scheduled alert validation. AI assistance did not replace laboratory experiments.
