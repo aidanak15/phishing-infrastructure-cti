@@ -8,7 +8,7 @@ Our group project, **Cyber Threat Intelligence Analysis of Phishing Infrastructu
 
 This week is a **desk-based analysis**. No attacks or tests were executed. The findings are linked to the Week 9 Splunk laboratory to identify telemetry gaps; the existing tests cannot quantify general detection coverage.
 
-During Week 10, we studied APT29 and its phishing-related techniques. This was a source-based analysis; we did not run any new attacks or laboratory tests.
+During Week 10, we studied APT29 and its phishing-related techniques. This was a source-based analysis; we did not run any new attacks or laboratory tests. Our focus was on explaining documented adversary behavior and identifying which monitoring data would be required to investigate it.
 
 ## 2. Objectives
 
@@ -18,7 +18,7 @@ During Week 10, we studied APT29 and its phishing-related techniques. This was a
 - Compare APT29 techniques with the techniques tested in Week 9.
 - Identify detection gaps in our Splunk laboratory.
 
-Our objective was to study APT29 using public reports, map its techniques to MITRE ATT&CK, select those relevant to phishing infrastructure, and compare the findings with Week 9.
+Our objective was to study APT29 using public reports, map its techniques to MITRE ATT&CK, select those relevant to phishing infrastructure, and compare the findings with Week 9. This allowed us to connect open-source threat intelligence with the practical limitations of our existing SIEM environment.
 
 ## 3. Group Profile: APT29
 
@@ -33,7 +33,7 @@ Our objective was to study APT29 using public reports, map its techniques to MIT
 
 > Group names are assigned by different vendors and may not overlap perfectly. We use the MITRE ATT&CK group name APT29 for consistency.
 
-We selected APT29, also known as Cozy Bear. Public threat intelligence reports associate this group with cyber espionage and phishing campaigns. Its MITRE ATT&CK group identifier is G0016.
+We selected APT29, also known as Cozy Bear. Public threat intelligence reports associate this group with cyber espionage and phishing campaigns. Its MITRE ATT&CK group identifier is G0016. We kept the attribution and naming from published sources instead of drawing independent conclusions about the group.
 
 ## 4. Sources
 
@@ -47,7 +47,7 @@ We selected APT29, also known as Cozy Bear. Public threat intelligence reports a
 
 > The technique table was checked against the **MITRE ATT&CK G0016 group page (version 6.2, modified July 31, 2026)**. Vendor reports provide additional context. The Mandiant APT1 report is included as syllabus background, not as evidence about APT29.
 
-Our primary source was the APT29 profile in MITRE ATT&CK. Mandiant reports provided examples of phishing campaigns, and CrowdStrike helped us review the group's background and alternative names.
+Our primary source was the APT29 profile in MITRE ATT&CK. Mandiant reports provided examples of phishing campaigns, and CrowdStrike helped us review the group's background and alternative names. Using several sources helped distinguish a general group profile from evidence about particular campaigns.
 
 ## 5. TTP Mapping to MITRE ATT&CK
 
@@ -79,7 +79,7 @@ The table lists techniques associated with APT29 in MITRE ATT&CK that are releva
 
 > The "Use by APT29" column summarizes the MITRE [G0016 Techniques Used table](https://attack.mitre.org/groups/G0016/). Not all techniques belong to the same campaign. For campaign-specific evidence, see the references cited by MITRE and the Mandiant report.
 
-We selected 21 documented APT29 techniques and prepared an MITRE ATT&CK mapping table. The most relevant ones involve phishing attachments, malicious links, compromised domains, and email accounts.
+We selected 21 documented APT29 techniques and prepared an MITRE ATT&CK mapping table. The most relevant ones involve phishing attachments, malicious links, compromised domains, and email accounts. For each technique, we noted its tactic and why it matters to phishing-related threat intelligence.
 
 ### 5.1 Mapping artifacts and optional ATT&CK Navigator
 
@@ -87,7 +87,7 @@ For a concise, defense-friendly mapping table and evidence trace, see [MITRE_ATT
 
 The exported [APT29 Navigator SVG](screenshots/w10_navigator_apt29.svg) is included in Section 10.2. It visualizes a group profile captured before the later extension of the selected 21-technique JSON layer; the [current analytical JSON layer](attack-navigator-layer.json) is the up-to-date selection.
 
-We created MITRE_ATTACK_Mapping.md and the attack-navigator-layer.json file. The JSON layer can be opened in ATT&CK Navigator to visualize the selected techniques; it does not represent techniques we executed.
+We created MITRE_ATTACK_Mapping.md and the attack-navigator-layer.json file. The JSON layer can be opened in ATT&CK Navigator to visualize the selected techniques; it does not represent techniques we executed. The mapping table supplies the explanation, while Navigator provides a more visual way to explore the same selected IDs.
 
 ## 6. Phishing and Infrastructure Focus
 
@@ -116,7 +116,7 @@ This section connects the APT29 analysis to the project topic.
 
 > We did not collect or publish real APT29 IOCs in this report. IOCs change quickly, and current ones should be taken from the original vendor reports.
 
-We analyzed how phishing relates to compromised domains, email, and legitimate web services. For example, a Mandiant report on WINELOADER describes a phishing link to an archive hosted on a compromised website.
+We analyzed how phishing relates to compromised domains, email, and legitimate web services. For example, a Mandiant report on WINELOADER describes a phishing link to an archive hosted on a compromised website. This illustrates why defenders need to inspect both phishing messages and the infrastructure behind their links.
 
 ## 7. Link to Week 9 (Atomic Red Team and Splunk)
 
@@ -130,7 +130,7 @@ We analyzed how phishing relates to compromised domains, email, and legitimate w
 | T1584.001, T1090.004 | **Not applicable to atomic tests** | Infrastructure techniques are analyzed through CTI (domain, IP, certificate data), not emulated |
 | T1546.003, T1547.001, T1548.002, T1560.001 | **Not tested** | Windows persistence/privilege and archival behaviors require telemetry not available in this lab |
 
-We compared the documented APT29 techniques with our Week 9 laboratory. We tested T1082 on Kali Linux, while T1003.008 was studied theoretically. This is a technique-level connection, not evidence that we detected APT29.
+We compared the documented APT29 techniques with our Week 9 laboratory. We tested T1082 on Kali Linux, while T1003.008 was studied theoretically. This is a technique-level connection, not evidence that we detected APT29. Our Unix-shell test also differed from the PowerShell subtechnique documented for APT29, so it should not be presented as an exact reproduction.
 
 ### 7.1 Detection gap summary for our Splunk laboratory
 
@@ -141,7 +141,7 @@ We compared the documented APT29 techniques with our Week 9 laboratory. We teste
 
 These gaps mean we cannot claim that our lab detects APT29 techniques. The comparison shows what telemetry would have to be added. The April 2022 Mandiant campaign appendix offers a documented **technique-level** link to our T1082 test and theoretical T1003.008 discussion; it is not evidence of matching APT29 payloads, commands, infrastructure, or end-to-end detection.
 
-The comparison showed several gaps: our lab used Linux, monitored only process execution, relied on manual event forwarding, and used a narrow alert rule. Additional logs and detection logic would be needed for broader coverage.
+The comparison showed several gaps: our lab used Linux, monitored only process execution, relied on manual event forwarding, and used a narrow alert rule. Additional logs and detection logic would be needed for broader coverage. Recognizing these gaps is useful because it helps prioritize future log sources and realistic detection tests.
 
 ### 7.2 Proposed next steps
 
@@ -150,7 +150,7 @@ The comparison showed several gaps: our lab used Linux, monitored only process e
 3. Consider a separate, authorized Linux file-access monitoring exercise using harmless test files; this would demonstrate an auditing capability, not reproduce APT29 credential dumping.
 4. Create SPL queries for authentication anomalies (e.g. many failed logins across accounts) as a basis for password-spray detection.
 
-Future improvements could include a Windows machine with Sysmon, automatic log forwarding, and new Splunk searches for authentication activity and other security events.
+Future improvements could include a Windows machine with Sysmon, automatic log forwarding, and new Splunk searches for authentication activity and other security events. Those additions would help us observe Windows activity and reduce dependence on manually submitted event samples.
 
 ## 8. Limitations
 
@@ -161,7 +161,7 @@ Future improvements could include a Windows machine with Sysmon, automatic log f
 - The lab does not emulate APT29 as a full adversary. Only isolated technique tests were run in Week 9.
 - No IOCs were validated against live infrastructure.
 
-Our analysis relied on public reporting, and the 21 techniques are only a selected subset of APT29's profile. We did not observe real APT29 activity or reproduce its campaigns.
+Our analysis relied on public reporting, and the 21 techniques are only a selected subset of APT29's profile. We did not observe real APT29 activity or reproduce its campaigns. The results therefore explain what is known from the cited sources, not what our own sensors saw in a live campaign.
 
 ## 9. Conclusion
 
@@ -171,13 +171,13 @@ Comparing this profile with the Week 9 laboratory showed that our Linux-based Sp
 
 The analysis supports the project direction: phishing infrastructure indicators from CTI should be combined with endpoint and authentication telemetry in the SIEM to give analysts more context.
 
-In conclusion, we studied APT29, mapped 21 techniques, created an ATT&CK Navigator layer, and compared the findings with Week 9. Phishing infrastructure intelligence should be complemented by endpoint telemetry in a SIEM.
+In conclusion, we studied APT29, mapped 21 techniques, created an ATT&CK Navigator layer, and compared the findings with Week 9. Phishing infrastructure intelligence should be complemented by endpoint telemetry in a SIEM. Together, the two weeks show how documented attacker techniques can guide choices about endpoint monitoring and threat hunting.
 
 ## 10. Screenshots and Evidence
 
 The following evidence supports the APT29 threat intelligence analysis and MITRE ATT&CK mapping.
 
-This section contains evidence of our analytical work: the MITRE APT29 page, a Navigator visualization, and links to the mapping table and JSON layer. These do not show attack execution.
+This section contains evidence of our analytical work: the MITRE APT29 page, a Navigator visualization, and links to the mapping table and JSON layer. These do not show attack execution. We can show the group profile first, then the table and Navigator layer to explain how our analysis was organized.
 
 ### 10.1 MITRE ATT&CK Group Profile
 
@@ -185,7 +185,7 @@ The screenshot shows the official MITRE ATT&CK APT29 (G0016) page, including the
 
 ![APT29 MITRE ATT&CK Techniques](screenshots/w10_mitre_g0016.png)
 
-This screenshot shows the official MITRE ATT&CK APT29 G0016 profile and its documented techniques, which informed our mapping.
+This screenshot shows the official MITRE ATT&CK APT29 G0016 profile and its documented techniques, which informed our mapping. It served as the primary reference for checking which selected techniques were associated with the group.
 
 ### 10.2 ATT&CK Navigator
 
@@ -195,7 +195,7 @@ An ATT&CK Navigator layer was exported to visualize the documented techniques as
 
 The Navigator visualization represents publicly documented techniques, not techniques executed during Week 10.
 
-This image visualizes documented APT29 techniques. The updated selection of 21 techniques is stored in the JSON layer; the SVG was exported earlier and illustrates a previous view.
+This image visualizes documented APT29 techniques. The updated selection of 21 techniques is stored in the JSON layer; the SVG was exported earlier and illustrates a previous view. For a defense focused on the final 21-technique selection, the JSON layer is the authoritative artifact.
 
 ### 10.3 Supporting Artifacts
 
@@ -203,7 +203,7 @@ This image visualizes documented APT29 techniques. The updated selection of 21 t
 - [ATT&CK Navigator JSON Layer](attack-navigator-layer.json)
 - [Week 9 Laboratory Results](../week9/README.md)
 
-Our main deliverables are the MITRE_ATTACK_Mapping.md table, the attack-navigator-layer.json file, and the Week 9 report used for comparison.
+Our main deliverables are the MITRE_ATTACK_Mapping.md table, the attack-navigator-layer.json file, and the Week 9 report used for comparison. They let a reviewer follow the analysis and compare our conclusions with the previous laboratory evidence.
 
 ## 11. References
 
@@ -215,7 +215,7 @@ Our main deliverables are the MITRE_ATTACK_Mapping.md table, the attack-navigato
 6. MITRE ATT&CK Navigator: https://mitre-attack.github.io/attack-navigator/
 7. Week 9 report of this repository: [../week9/README.md](../week9/README.md)
 
-We used MITRE ATT&CK, Mandiant research, and the CrowdStrike profile. The APT1 report serves only as historical background and is not evidence of APT29 techniques.
+We used MITRE ATT&CK, Mandiant research, and the CrowdStrike profile. The APT1 report serves only as historical background and is not evidence of APT29 techniques. This distinction matters because techniques observed for one group must not be incorrectly attributed to another.
 
 ## 12. Use of AI
 
@@ -230,5 +230,5 @@ Our team used AI assistance to organize the research, clarify ATT&CK terminology
 
 The Week 10 work is a source-based study, not an emulation of APT29. AI-generated statements were checked against primary sources, and no observations or screenshots were fabricated.
 
-Claude assisted with the initial outline, and ChatGPT helped refine the descriptions and compare the techniques. We checked the final claims against MITRE and the published reports.
+Claude assisted with the initial outline, and ChatGPT helped refine the descriptions and compare the techniques. We checked the final claims against MITRE and the published reports. We used those tools for writing support and cross-checking, not as substitutes for the cited threat reports.
 
