@@ -2,6 +2,9 @@
 
 ## 1. Introduction
 
+> **🎤 Текст для защиты (RU):** На девятой неделе мы проверяли, как система безопасности регистрирует отдельные действия в Linux. Для этого мы выполнили два безопасных теста Atomic Red Team и проанализировали события в Splunk.
+
+
 This week focuses on Atomic Red Team, an open-source framework developed by Red Canary for testing security detection capabilities using techniques mapped to MITRE ATT&CK.
 
 Our group project, **Cyber Threat Intelligence Analysis of Phishing Infrastructure**, investigates indicators and activities associated with phishing campaigns.
@@ -9,6 +12,9 @@ Our group project, **Cyber Threat Intelligence Analysis of Phishing Infrastructu
 For Week 9, we performed two safe, adapted Atomic Red Team tests in an isolated Kali Linux virtual machine and analyzed the recorded events using Splunk Enterprise.
 
 ## 2. Objectives
+
+> **🎤 Текст для защиты (RU):** Наша цель — выполнить тестовые действия, записать их через Auditd, передать выбранные события в Splunk и проверить, можем ли мы найти их с помощью SPL-запросов.
+
 
 - Understand the purpose of Atomic Red Team.
 - Perform safe tests mapped to MITRE ATT&CK.
@@ -18,6 +24,9 @@ For Week 9, we performed two safe, adapted Atomic Red Team tests in an isolated 
 - Evaluate telemetry visibility and detection limitations.
 
 ## 3. Laboratory Environment
+
+> **🎤 Текст для защиты (RU):** Мы использовали Kali Linux в виртуальной машине UTM, а Splunk Enterprise запустили в Docker на Mac. Auditd регистрировал выполнение процессов, а HEC использовался для ручной отправки выбранных событий в Splunk.
+
 
 | Component | Configuration |
 |---|---|
@@ -34,6 +43,9 @@ For Week 9, we performed two safe, adapted Atomic Red Team tests in an isolated 
 
 ## 4. Methodology
 
+> **🎤 Текст для защиты (RU):** Сначала подготовили лабораторию и настроили Auditd. Затем изучили YAML-инструкции Atomic Red Team, вручную выполнили два безопасных теста, нашли записи аудита и передали их в Splunk для анализа.
+
+
 The experiment followed these steps:
 
 1. Prepared Kali Linux and Splunk Enterprise.
@@ -49,7 +61,13 @@ The experiments were conducted in a controlled educational environment without m
 
 ## 5. Executed Tests
 
+> **🎤 Текст для защиты (RU):** Мы проверили две техники MITRE ATT&CK: выполнение команд через Unix Shell и сбор информации об операционной системе. Это были отдельные безопасные тесты, а не полноценная фишинговая атака.
+
+
 ### 5.1 T1059.004 — Command and Scripting Interpreter: Unix Shell
+
+> **🎤 Текст для защиты (RU):** В первом тесте мы создали и выполнили shell-скрипт, который проверял соединение с локальным адресом 127.0.0.1. Auditd зафиксировал запуск программы, а одно выбранное событие мы нашли в Splunk.
+
 
 **Atomic Test #1: Create and Execute Bash Shell Script**
 
@@ -69,6 +87,9 @@ The shell-script procedure was manually adapted from [Atomic Red Team T1059.004 
 **SIEM result:** The execution event was successfully retrieved using an SPL search.
 
 ### 5.2 T1082 — System Information Discovery
+
+> **🎤 Текст для защиты (RU):** Во втором тесте мы выполнили команды uname, cat /etc/os-release и uptime, чтобы получить сведения о Linux. Два выбранных события, относящихся к uname и uptime, передали в Splunk и успешно нашли.
+
 
 **Atomic Test #3: List OS Information**
 
@@ -92,6 +113,9 @@ The commands collected operating system information, kernel information, and sys
 
 ### 5.3 Cleanup
 
+> **🎤 Текст для защиты (RU):** После тестирования мы удалили временный скрипт art.sh. Скриншоты и результаты сохранили как доказательства выполнения лабораторной работы.
+
+
 After completing the Atomic Red Team experiments, the temporary `art.sh` shell script was removed from the Kali Linux test environment.
 
 The test output files and screenshots were retained as evidence.
@@ -99,6 +123,9 @@ The test output files and screenshots were retained as evidence.
 No persistent system modifications or malicious payloads were introduced by the two adapted test procedures.
 
 ## 6. MITRE ATT&CK Mapping
+
+> **🎤 Текст для защиты (RU):** Мы сопоставили два теста с MITRE ATT&CK: T1059.004 относится к выполнению команд, а T1082 — к сбору системной информации. Так можно одинаково описывать поведение, связанное с разными инцидентами.
+
 
 | ATT&CK ID | Technique | Tactic | Relevance to Phishing |
 |---|---|---|---|
@@ -108,6 +135,9 @@ No persistent system modifications or malicious payloads were introduced by the 
 The tests do not reproduce a complete phishing attack. They demonstrate post-access behaviors that can be relevant when investigating phishing-related incidents.
 
 ### 6.1 Connection to Phishing Infrastructure CTI
+
+> **🎤 Текст для защиты (RU):** Наш проект изучает фишинговую инфраструктуру: домены, ссылки и другие индикаторы. События выполнения команд дополняют эти данные и помогают аналитику понять, что происходило на устройстве после подозрительной активности.
+
 
 Our project focuses on identifying and analyzing indicators of compromise (IOCs) associated with phishing infrastructure, including suspicious domains, URLs, and network activity.
 
@@ -122,6 +152,9 @@ By combining phishing-related IOCs with endpoint logs in a SIEM, analysts can de
 These laboratory tests did not establish a direct connection between the simulated commands and any real phishing campaign. However, Mandiant's [2022 analysis of APT29 phishing campaigns](https://cloud.google.com/blog/topics/threat-intelligence/tracking-apt29-phishing-campaigns/) lists **T1082** and **T1003.008** among its reported ATT&CK TTPs. This provides a literature-level connection to the executed T1082 test and the theoretical T1003.008 discussion, **not** proof that the lab reproduced APT29 commands, infrastructure, or activity.
 
 ## 7. SIEM Detection Analysis
+
+> **🎤 Текст для защиты (RU):** Мы настроили Auditd для записи запуска процессов через execve. Затем вручную передали три выбранных события через HEC в индекс atomic_week9 и проверили их поисковыми запросами Splunk.
+
 
 Linux Audit was configured to collect process execution events using the `execve` system call.
 
@@ -140,6 +173,9 @@ Both selected tests generated observable telemetry.
 These Week 9 atomic-test results demonstrate retrieval of manually forwarded events, not automated forwarding or broad threat detection. A scheduled alert was first validated with a synthetic control event and subsequently with a separately generated, real Auditd event manually forwarded through HEC (Section 10).
 
 ### 7.1 Linux Audit Configuration
+
+> **🎤 Текст для защиты (RU):** Здесь показано правило Auditd для мониторинга execve и команда ausearch для просмотра записей. Эти данные подтверждают, что тестовые программы действительно запускались в Kali Linux.
+
 
 Linux Audit (auditd) was configured in Kali Linux to monitor process execution through the `execve` system call.
 
@@ -160,6 +196,9 @@ sudo ausearch -k week9_exec -i
 The rule was configured for the laboratory session. It was not documented as a persistent audit rule across system reboots. The `auid` filter targets the current logged-in user's audit identity and relies on a valid Linux `loginuid`; if no events appear, inspect the audit session/login UID configuration before drawing conclusions.
 
 ### 7.2 Splunk Detection Queries
+
+> **🎤 Текст для защиты (RU):** Мы написали SPL-запросы для поиска событий обеих техник, подсчёта результатов и проверки запуска /bin/sh. Запросы позволили увидеть нужные записи в таблицах Splunk.
+
 
 **Query 1 — T1059.004 Unix Shell**
 
@@ -199,6 +238,9 @@ The alert was first validated using a separate synthetic event transmitted throu
 
 ## 8. Limitations
 
+> **🎤 Текст для защиты (RU):** Лаборатория проверяла только два отдельных теста; события передавались вручную. Мы не тестировали непрерывный сбор логов и не можем утверждать, что настроенный алерт обнаруживает все виды атак.
+
+
 - Only two safe, manually adapted Atomic Red Team tests were executed.
 - The experiments were performed in an isolated Kali Linux virtual machine.
 - Selected Linux Audit events were manually extracted, sanitized, and forwarded to Splunk HEC. Therefore, the results validate the selected-event ingestion pipeline rather than continuous or comprehensive detection coverage.
@@ -210,6 +252,9 @@ The alert was first validated using a separate synthetic event transmitted throu
 - T1003 was analyzed theoretically; no credential dumping was performed.
 
 ## 9. Experimental Evidence
+
+> **🎤 Текст для защиты (RU):** В этом разделе представлены скриншоты выполнения тестов в Kali Linux и найденных событий в Splunk. Они подтверждают полученные результаты, а не обнаружение реальной фишинговой кампании.
+
 
 The following screenshots document the execution of the adapted Atomic Red Team tests and the analysis of their events in Splunk SIEM.
 
@@ -245,6 +290,9 @@ Both selected tests generated Linux Audit process telemetry that was manually se
 
 ## 10. Automated Detection Alert Validation
 
+> **🎤 Текст для защиты (RU):** Мы настроили Scheduled Alert, который каждые пять минут ищет события выполнения /bin/sh за последние десять минут. Сначала проверили его на искусственном событии, затем — на настоящей записи Auditd, переданной вручную.
+
+
 An additional scheduled alert was configured in Splunk Enterprise to monitor Unix shell execution events.
 
 **Alert configuration:**
@@ -270,6 +318,9 @@ An additional scheduled alert was configured in Splunk Enterprise to monitor Uni
 
 ### 10.1 Additional validation — real Auditd event (November 4, 2026)
 
+> **🎤 Текст для защиты (RU):** Для дополнительной проверки мы создали безопасное событие Auditd с идентификатором 48047 и отправили его в Splunk. В 08:55:01 UTC запланированный поиск нашёл эту запись, и алерт сработал.
+
+
 A separate harmless Kali Linux command, `/bin/sh -c 'echo "Week9 real audit event validation"'`, generated a genuine `EXECVE` record in Linux Audit with **Audit ID `48047`** and audit key `week9_exec`. Using `ausearch -a 48047 -i`, the team verified the raw `EXECVE`, `SYSCALL` and associated records. The event was then **manually** transformed into HEC JSON while retaining the original audit record in `audit_raw`, with fields `command=/bin/sh`, `audit_id=48047` and `validation_type=real_audit_manual_forward`.
 
 Splunk HEC returned `{"text":"Success","code":0}`. The event was indexed under `index=atomic_week9` and `sourcetype=week9:audit`; an independent search retrieved **one** matching event. The scheduled search at **08:50 UTC** ran before ingestion and reported zero results; its next run at **08:55:01 UTC** returned `result_count=1`. The alert's Trigger History recorded a firing at **08:55:01 UTC**, and **View Results** contained the matching `host=kali-week9`, `command=/bin/sh`, `audit_id=48047` entry.
@@ -293,6 +344,9 @@ Splunk HEC returned `{"text":"Success","code":0}`. The event was indexed under `
 ![Real Auditd event 48047 in scheduled alert results](screenshots/13_real_audit_alert_results.png)
 
 ## 11. Additional MITRE ATT&CK Analysis — T1003
+
+> **🎤 Текст для защиты (RU):** Дополнительно мы теоретически рассмотрели технику T1003, связанную с доступом к учётным данным. Никаких команд по извлечению паролей или хешей мы не выполняли.
+
 
 **Technique:** T1003 — OS Credential Dumping  
 **Tactic:** Credential Access  
@@ -333,6 +387,9 @@ The practical experiments remained focused on T1059.004 and T1082. No credential
 
 ## 12. Conclusion
 
+> **🎤 Текст для защиты (RU):** Итак, мы выполнили два безопасных теста, получили три выбранных события в Splunk и проверили автоматическое срабатывание алерта на настоящей записи Auditd. В будущем нужно автоматизировать сбор событий и улучшить правила обнаружения.
+
+
 Week 9 demonstrated how safe, manually adapted Atomic Red Team procedures can support security monitoring and threat hunting.
 
 Two techniques, T1059.004 (Unix Shell) and T1082 (System Information Discovery), were successfully executed in Kali Linux. Linux Audit recorded the corresponding process execution activity, and three selected events were manually forwarded to Splunk Enterprise.
@@ -349,6 +406,9 @@ Future improvements include automated Auditd log forwarding, broader shell execu
 
 ## 13. References
 
+> **🎤 Текст для защиты (RU):** Для подготовки лаборатории и проверки описаний техник мы использовали официальные материалы Red Canary, MITRE ATT&CK и Splunk.
+
+
 1. Red Canary — Atomic Red Team: https://github.com/redcanaryco/atomic-red-team
 2. MITRE ATT&CK — T1059.004: https://attack.mitre.org/techniques/T1059/004/
 3. MITRE ATT&CK — T1082: https://attack.mitre.org/techniques/T1082/
@@ -358,6 +418,9 @@ Future improvements include automated Auditd log forwarding, broader shell execu
 7. Splunk Documentation: https://docs.splunk.com/
 
 ## 14. Use of AI
+
+> **🎤 Текст для защиты (RU):** ChatGPT помогал разбирать документацию, устранять ошибки настройки и оформлять отчёт. Технические результаты мы проверяли по реальным логам, поиску и истории срабатывания Splunk.
+
 
 ChatGPT (OpenAI) was used during the Week 9 laboratory and reporting workflow.
 
